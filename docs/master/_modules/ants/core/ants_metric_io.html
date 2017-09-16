@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ants.core.ants_metric_io &mdash; PyTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="PyTorch master documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/pytorch-logo-dark.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage-io">ANTsImage IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform-io">ANTsTransform IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vis.html">vis</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyTorch</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ants.core.ants_metric_io</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ants.core.ants_metric_io</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;new_ants_metric&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;create_ants_metric&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;supported_metrics&#39;</span><span class="p">]</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ants_image</span> <span class="k">as</span> <span class="n">iio</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ants_metric</span> <span class="k">as</span> <span class="n">mio</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">lib</span>
+
+<span class="n">_new_ants_metric_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">lib</span><span class="o">.</span><span class="n">new_ants_metricF2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="n">lib</span><span class="o">.</span><span class="n">new_ants_metricF3</span>
+<span class="p">}</span>
+
+<span class="n">_create_ants_metric_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">lib</span><span class="o">.</span><span class="n">create_ants_metricF2</span>
+<span class="p">}</span>
+
+<span class="n">_supported_metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;MeanSquares&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;MattesMutualInformation&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;ANTsNeighborhoodCorrelation&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Correlation&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Demons&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;JointHistogramMutualInformation&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="supported_metrics"><a class="viewcode-back" href="../../../core.html#ants.supported_metrics">[docs]</a><span class="k">def</span> <span class="nf">supported_metrics</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">_supported_metrics</span></div>
+
+<div class="viewcode-block" id="new_ants_metric"><a class="viewcode-back" href="../../../core.html#ants.new_ants_metric">[docs]</a><span class="k">def</span> <span class="nf">new_ants_metric</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">metric_type</span><span class="o">=</span><span class="s1">&#39;MeanSquares&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">metric_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_supported_metrics</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;metric_type must be one of </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">_supported_metrics</span><span class="p">)</span>
+
+    <span class="n">new_ants_metric_fn</span> <span class="o">=</span> <span class="n">_new_ants_metric_dict</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span>
+    <span class="n">itk_tx</span> <span class="o">=</span> <span class="n">new_ants_metric_fn</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">metric_type</span><span class="p">)</span>
+
+    <span class="n">ants_metric</span> <span class="o">=</span> <span class="n">mio</span><span class="o">.</span><span class="n">ANTsImageToImageMetric</span><span class="p">(</span><span class="n">itk_tx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ants_metric</span></div>
+
+
+<div class="viewcode-block" id="create_ants_metric"><a class="viewcode-back" href="../../../core.html#ants.create_ants_metric">[docs]</a><span class="k">def</span> <span class="nf">create_ants_metric</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> 
+                        <span class="n">moving</span><span class="p">,</span>
+                        <span class="n">metric_type</span><span class="o">=</span><span class="s1">&#39;MeanSquares&#39;</span><span class="p">,</span>
+                        <span class="n">fixed_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">moving_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;regular&#39;</span><span class="p">,</span>
+                        <span class="n">sampling_percentage</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    metric_type : string</span>
+<span class="sd">        which metric to use</span>
+<span class="sd">        options:</span>
+<span class="sd">            MeanSquares</span>
+<span class="sd">            MattesMutualInformation</span>
+<span class="sd">            ANTsNeighborhoodCorrelation</span>
+<span class="sd">            Correlation</span>
+<span class="sd">            Demons</span>
+<span class="sd">            JointHistogramMutualInformation</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; import ants</span>
+<span class="sd">    &gt;&gt;&gt; fixed = ants.image_read(ants.get_ants_data(&#39;r16&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; moving = ants.image_read(ants.get_ants_data(&#39;r64&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; metric_type = &#39;Correlation&#39;</span>
+<span class="sd">    &gt;&gt;&gt; metric = ants.create_ants_metric(fixed, moving, metric_type)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">metric_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_supported_metrics</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;metric_type must be one of </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">_supported_metrics</span><span class="p">)</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">dimension</span>
+    <span class="n">pixeltype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+
+    <span class="c1"># Check for valid dimension</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dimension</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">dimension</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unsupported dimension </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">dimension</span><span class="p">)</span>
+
+    <span class="n">is_vector</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># For now, no multichannel images</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> <span class="n">iio</span><span class="o">.</span><span class="n">ANTsImage</span><span class="p">):</span>
+        <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">dimension</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="n">pixeltype</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">pixeltype</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid fixed image&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">moving</span><span class="p">,</span> <span class="n">iio</span><span class="o">.</span><span class="n">ANTsImage</span><span class="p">):</span>
+        <span class="n">moving</span> <span class="o">=</span> <span class="n">moving</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">moving</span><span class="o">.</span><span class="n">dimension</span> <span class="o">!=</span> <span class="n">dimension</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fixed and Moving images must have same dimension&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid moving image&#39;</span><span class="p">)</span>
+
+    <span class="n">create_ants_metric_fn</span> <span class="o">=</span> <span class="n">_create_ants_metric_dict</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">create_ants_metric_fn</span><span class="p">(</span><span class="n">pixeltype</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">metric_type</span><span class="p">,</span> <span class="n">is_vector</span><span class="p">,</span> <span class="n">fixed</span><span class="o">.</span><span class="n">_img</span><span class="p">,</span> <span class="n">moving</span><span class="o">.</span><span class="n">_img</span><span class="p">)</span>
+
+    <span class="n">ants_metric</span> <span class="o">=</span> <span class="n">mio</span><span class="o">.</span><span class="n">ANTsImageToImageMetric</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fixed_mask</span><span class="p">,</span> <span class="n">iio</span><span class="o">.</span><span class="n">ANTsImage</span><span class="p">):</span>
+        <span class="n">ants_metric</span><span class="o">.</span><span class="n">set_fixed_mask</span><span class="p">(</span><span class="n">fixed_mask</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">moving_mask</span><span class="p">,</span> <span class="n">iio</span><span class="o">.</span><span class="n">ANTsImage</span><span class="p">):</span>
+        <span class="n">ants_metric</span><span class="o">.</span><span class="n">set_moving_mask</span><span class="p">(</span><span class="n">moving_mask</span><span class="p">)</span>
+
+    <span class="n">ants_metric</span><span class="o">.</span><span class="n">set_sampling</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="p">,</span> <span class="n">sampling_percentage</span><span class="p">)</span>
+    <span class="n">ants_metric</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ants_metric</span></div>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Torch Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

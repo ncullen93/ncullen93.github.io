@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Segmentation &mdash; PyTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="PyTorch master documentation" href="index.html"/>
+        <link rel="prev" title="Registration" href="registration.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/pytorch-logo-dark.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage-io">ANTsImage IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform-io">ANTsTransform IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="registration.html">Registration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Segmentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyTorch</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Segmentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/segmentation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ants">
+<span id="segmentation"></span><h1>Segmentation<a class="headerlink" href="#module-ants" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="ants.atropos">
+<code class="descclassname">ants.</code><code class="descname">atropos</code><span class="sig-paren">(</span><em>a</em>, <em>x</em>, <em>i='Kmeans[3]'</em>, <em>m='[0.2</em>, <em>1x1]'</em>, <em>c='[5</em>, <em>0]'</em>, <em>priorweight=0.25</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/atropos.html#atropos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.atropos" title="Permalink to this definition">¶</a></dt>
+<dd><p>A finite mixture modeling (FMM) segmentation approach with possibilities
+for specifying prior constraints. These prior constraints include the
+specification of a prior label image, prior probability images (one for
+each class), and/or an MRF prior to enforce spatial smoothing of the
+labels. Similar algorithms include FAST and SPM. atropos can also perform
+multivariate segmentation if you pass a list of images in: e.g. a=(img1,img2).</p>
+<p>ANTsR function: <cite>atropos</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>a</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> or </em><em>list/tuple of ANTsImage python:types</em>) &#8211; One or more scalar images to segment. If priors are not used,
+the intensities of the first image are used to order the classes
+in the segmentation output, from lowest to highest intensity. Otherwise
+the order of the classes is dictated by the order of the prior images.</li>
+<li><strong>x</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; mask image.</li>
+<li><strong>i</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; initialization usually KMeans[N] for N classes or a list of N prior
+probability images. See Atropos in ANTs for full set of options.</li>
+<li><strong>m</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; mrf parameters as a string, usually &#8220;[smoothingFactor,radius]&#8221; where
+smoothingFactor determines the amount of smoothing and radius determines
+the MRF neighborhood, as an ANTs style neighborhood vector eg &#8220;1x1x1&#8221;
+for a 3D image. The radius must match the dimensionality of the image,
+eg 1x1 for 2D and The default in ANTs is smoothingFactor=0.3 and
+radius=1. See Atropos for more options.</li>
+<li><strong>c</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; convergence parameters, &#8220;[numberOfIterations,convergenceThreshold]&#8221;.
+A threshold of 0 runs the full numberOfIterations, otherwise Atropos
+tests convergence by comparing the mean maximum posterior probability
+over the whole region of interest defined by the mask x.</li>
+<li><strong>priorweight</strong> (<em>scalar</em>) &#8211; usually 0 (priors used for initialization only), 0.25 or 0.5.</li>
+<li><strong>kwargs</strong> (<em>keyword arguments</em>) &#8211; more parameters, see Atropos help in ANTs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt><cite>segmentation</cite>: ANTsImage</dt>
+<dd><p class="first last">actually segmented image</p>
+</dd>
+<dt><cite>probabilityimages</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">list of ANTsImage types</span><dd><p class="first last">one image for each segmentation class</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary with the following key/value pairs</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_mask</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ants</span><span class="o">.</span><span class="n">atropos</span><span class="p">(</span> <span class="n">a</span> <span class="o">=</span> <span class="n">img</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="s1">&#39;[0.2,1x1]&#39;</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;[2,0]&#39;</span><span class="p">,</span>  <span class="n">i</span> <span class="o">=</span> <span class="s1">&#39;kmeans[3]&#39;</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">mask</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.geo_seg">
+<code class="descclassname">ants.</code><code class="descname">geo_seg</code><span class="sig-paren">(</span><em>img</em>, <em>brainmask</em>, <em>priors</em>, <em>seginit=None</em>, <em>vesselopt=None</em>, <em>vesselk=2</em>, <em>grad_step=1.25</em>, <em>mrfval=0.1</em>, <em>atroposits=10</em>, <em>jacw=None</em>, <em>beta=0.9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/geo_seg.html#geo_seg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.geo_seg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Brain segmentation based on geometric priors.
+Uses topological constraints to enhance accuracy of brain segmentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> or </em><em>list/tuple of ANTsImage python:types</em>) &#8211; input image or list of images (multiple features) where 1st image
+would typically be the primary constrast</li>
+<li><strong>brainmask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; binary image</li>
+<li><strong>priors</strong> (<em>list/tuple ANTsImage python:types</em>) &#8211; spatial priors, assume first is csf, second is gm, third is wm</li>
+<li><strong>seginit</strong> (<em>list/tuple of ANTsImage python:types</em>) &#8211; a previously computed segmentation which should have the structure of
+<cite>atropos</cite> or <cite>kmeans_segmentation</cite> output</li>
+<li><strong>vesselopt</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; one of bright, dark or none</li>
+<li><strong>vesselk</strong> (<em>integer</em>) &#8211; integer for kmeans vessel-based processing</li>
+<li><strong>grad_step</strong> (<em>scalar</em>) &#8211; scalar for registration</li>
+<li><strong>mrfval</strong> (<em>scalar</em>) &#8211; e.g. 0.05 or 0.1</li>
+<li><strong>atroposits</strong> (<em>integer</em>) &#8211; e.g. 5 iterations</li>
+<li><strong>jacw</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; precomputed diffeo jacobian</li>
+<li><strong>beta</strong> (<em>scalar</em>) &#8211; for sigma transformation ( thksig output variable )</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">segmentation result images</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of ANTsImages</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;simple&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">n3_bias_field_correction</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">n3_bias_field_correction</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bmk</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_mask</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segs</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kmeans_segmentation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">bmk</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">priors</span> <span class="o">=</span> <span class="n">segs</span><span class="p">[</span><span class="s1">&#39;probabilityimages&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">geo_seg</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">bmk</span><span class="p">,</span> <span class="n">priors</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.joint_label_fusion">
+<code class="descclassname">ants.</code><code class="descname">joint_label_fusion</code><span class="sig-paren">(</span><em>targetI</em>, <em>targetIMask</em>, <em>atlas_list</em>, <em>beta=4</em>, <em>rad=2</em>, <em>label_list=None</em>, <em>rho=0.01</em>, <em>usecor=False</em>, <em>r_search=3</em>, <em>nonnegative=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/joint_label_fusion.html#joint_label_fusion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.joint_label_fusion" title="Permalink to this definition">¶</a></dt>
+<dd><p>A multiple atlas voting scheme to customize labels for a new subject.
+This function will also perform intensity fusion. It almost directly
+calls the C++ in the ANTs executable so is much faster than other
+variants in ANTsR.</p>
+<p>One may want to normalize image intensities for each input image before
+passing to this function. If no labels are passed, we do intensity fusion.
+Note on computation time: the underlying C++ is multithreaded.
+You can control the number of threads by setting the environment
+variable ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS e.g. to use all or some
+of your CPUs. This will improve performance substantially.
+For instance, on a macbook pro from 2015, 8 cores improves speed by about 4x.</p>
+<p>ANTsR function: <cite>jointLabelFusion</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>targetI</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image to be approximated</li>
+<li><strong>targetIMask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; mask with value 1</li>
+<li><strong>atlas_list</strong> (<em>list of ANTsImage python:types</em>) &#8211; list containing intensity images</li>
+<li><strong>beta</strong> (<em>scalar</em>) &#8211; weight sharpness, default to 2</li>
+<li><strong>rad</strong> (<em>scalar</em>) &#8211; neighborhood radius, default to 2</li>
+<li><strong>label_list</strong> (<em>list of ANTsImage python:types</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; list containing images with segmentation labels</li>
+<li><strong>rho</strong> (<em>scalar</em>) &#8211; ridge penalty increases robustness to outliers but also makes image converge to average</li>
+<li><strong>usecor</strong> (<em>boolean</em>) &#8211; employ correlation as local similarity</li>
+<li><strong>r_search</strong> (<em>scalar</em>) &#8211; radius of search, default is 3</li>
+<li><strong>nonnegative</strong> (<em>boolean</em>) &#8211; constrain weights to be non-negative</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; whether to show status updates</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt><cite>segmentation</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">ANTsImage</span><dd><p class="first last">segmentation image</p>
+</dd>
+<dt><cite>intensity</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">ANTsImage</span><dd><p class="first last">intensity image</p>
+</dd>
+<dt><cite>probabilityimages</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">list of ANTsImage types</span><dd><p class="first last">probability map image for each label</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary w/ following key/value pairs</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">iMath</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="s1">&#39;Normalize&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r27&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi2</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r30&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi3</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r62&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi4</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r64&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi5</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r85&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">refmask</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_mask</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">refmask</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">iMath</span><span class="p">(</span><span class="n">refmask</span><span class="p">,</span><span class="s1">&#39;ME&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># just to speed things up</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ilist</span> <span class="o">=</span> <span class="p">[</span><span class="n">mi</span><span class="p">,</span><span class="n">mi2</span><span class="p">,</span><span class="n">mi3</span><span class="p">,</span><span class="n">mi4</span><span class="p">,</span><span class="n">mi5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seglist</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">ilist</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ilist</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">iMath</span><span class="p">(</span><span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;Normalize&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mytx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">registration</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">ref</span> <span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">typeofTransform</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Affine&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mywarpedimage</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">apply_transforms</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">ref</span><span class="p">,</span><span class="n">moving</span><span class="o">=</span><span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="n">transformlist</span><span class="o">=</span><span class="n">mytx</span><span class="p">[</span><span class="s1">&#39;fwdtransforms&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mywarpedimage</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">seg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">threshold_image</span><span class="p">(</span><span class="n">ilist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;Otsu&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">seglist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">seg</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">joint_label_fusion</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">refmask</span><span class="p">,</span> <span class="n">ilist</span><span class="p">,</span> <span class="n">r_search</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="n">label_list</span><span class="o">=</span><span class="n">seglist</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">*</span><span class="n">ref</span><span class="o">.</span><span class="n">dimension</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">joint_label_fusion</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">refmask</span><span class="p">,</span><span class="n">ilist</span><span class="p">,</span> <span class="n">r_search</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">*</span><span class="n">ref</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.kelly_kapowski">
+<code class="descclassname">ants.</code><code class="descname">kelly_kapowski</code><span class="sig-paren">(</span><em>s</em>, <em>g</em>, <em>w</em>, <em>its=50</em>, <em>r=0.025</em>, <em>m=1.5</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/kelly_kapowski.html#kelly_kapowski"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.kelly_kapowski" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute cortical thickness using the DiReCT algorithm.</p>
+<p>Diffeomorphic registration-based cortical thickness based on probabilistic
+segmentation of an image.  This is an optimization algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (<em>ANTsimage</em>) &#8211; segmentation image</li>
+<li><strong>g</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; gray matter probability image</li>
+<li><strong>w</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; white matter probability image</li>
+<li><strong>its</strong> (<em>integer</em>) &#8211; convergence params - controls iterations</li>
+<li><strong>r</strong> (<em>scalar</em>) &#8211; gradient descent update parameter</li>
+<li><strong>m</strong> (<em>scalar</em>) &#8211; gradient field smoothing parameter</li>
+<li><strong>kwargs</strong> (<em>keyword arguments</em>) &#8211; anything else, see KellyKapowski help in ANTs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_mask</span><span class="p">(</span> <span class="n">img</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segs</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kmeans_segmentation</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">kmask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">thick</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kelly_kapowski</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">segs</span><span class="p">[</span><span class="s1">&#39;segmentation&#39;</span><span class="p">],</span> <span class="n">g</span><span class="o">=</span><span class="n">segs</span><span class="p">[</span><span class="s1">&#39;probabilityimages&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+<span class="go">                                w=segs[&#39;probabilityimages&#39;][2], its=45,</span>
+<span class="go">                                r=0.5, m=1)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.kmeans_segmentation">
+<code class="descclassname">ants.</code><code class="descname">kmeans_segmentation</code><span class="sig-paren">(</span><em>img</em>, <em>k</em>, <em>kmask=None</em>, <em>mrf=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/kmeans.html#kmeans_segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.kmeans_segmentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>K-means image segmentation that is a wrapper around <cite>ants.atropos</cite></p>
+<p>ANTsR function: <cite>kmeansSegmentation</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image</li>
+<li><strong>k</strong> (<em>integer</em>) &#8211; integer number of classes</li>
+<li><strong>kmask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; segment inside this mask</li>
+<li><strong>mrf</strong> (<em>scalar</em>) &#8211; smoothness, higher is smoother</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">n3_bias_field_correction</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kmeans_segmentation</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.label_geometry_measures">
+<code class="descclassname">ants.</code><code class="descname">label_geometry_measures</code><span class="sig-paren">(</span><em>label_image</em>, <em>intensity_image=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/label_geometry_measures.html#label_geometry_measures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.label_geometry_measures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for the ANTs funtion labelGeometryMeasures</p>
+<p>ANTsR function: <cite>labelGeometryMeasures</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>label_image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image on which to compute geometry</li>
+<li><strong>intensity_image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; image with intensity values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kmeans_segmentation</span><span class="p">(</span> <span class="n">fi</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)[</span><span class="s1">&#39;segmentation&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">geom</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">label_geometry_measures</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span><span class="n">fi</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.prior_based_segmentation">
+<code class="descclassname">ants.</code><code class="descname">prior_based_segmentation</code><span class="sig-paren">(</span><em>img</em>, <em>priors</em>, <em>mask</em>, <em>priorweight=0.25</em>, <em>mrf=0.1</em>, <em>iterations=25</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/segmentation/prior_based_segmentation.html#prior_based_segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.prior_based_segmentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatial prior-based image segmentation.</p>
+<p>Markov random field regularized, prior-based image segmentation that is a
+wrapper around atropos (see ANTs and related publications).</p>
+<p>ANTsR function: <cite>priorBasedSegmentation</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> or </em><em>list/tuple of ANTsImage python:types</em>) &#8211; input image or image list for multivariate segmentation</li>
+<li><strong>priors</strong> (<em>list/tuple of ANTsImage python:types</em>) &#8211; list of priors that cover the number of classes</li>
+<li><strong>mask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; segment inside this mask</li>
+<li><strong>prior_weight</strong> (<em>scalar</em>) &#8211; usually 0 (priors used for initialization only), 0.25 or 0.5.</li>
+<li><strong>mrf</strong> (<em>scalar</em>) &#8211; regularization, higher is smoother, a numerical value in range 0.0 to 0.2</li>
+<li><strong>iterations</strong> (<em>integer</em>) &#8211; maximum number of iterations.  could be a large value eg 25.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt><cite>segmentation</cite>: ANTsImage</dt>
+<dd><p class="first last">actually segmented image</p>
+</dd>
+<dt><cite>probabilityimages</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">list of ANTsImage types</span><dd><p class="first last">one image for each segmentation class</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary with the following key/value pairs</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">kmeans_segmentation</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">threshold_image</span><span class="p">(</span><span class="n">seg</span><span class="p">[</span><span class="s1">&#39;segmentation&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="n">e15</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">priorseg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">prior_based_segmentation</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">seg</span><span class="p">[</span><span class="s1">&#39;probabilityimages&#39;</span><span class="p">],</span> <span class="n">mask</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="registration.html" class="btn btn-neutral" title="Registration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Torch Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

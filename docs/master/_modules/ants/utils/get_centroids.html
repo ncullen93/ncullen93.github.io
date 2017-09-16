@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ants.utils.get_centroids &mdash; PyTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="PyTorch master documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/pytorch-logo-dark.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage-io">ANTsImage IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform-io">ANTsTransform IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vis.html">vis</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyTorch</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ants.utils.get_centroids</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ants.utils.get_centroids</h1><div class="highlight"><pre>
+<span></span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get_centroids&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">label_clusters</span><span class="p">,</span> <span class="n">label_stats</span>
+
+<div class="viewcode-block" id="get_centroids"><a class="viewcode-back" href="../../../utils.html#ants.get_centroids">[docs]</a><span class="k">def</span> <span class="nf">get_centroids</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">clustparam</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reduces a variate/statistical/network image to a set of centroids </span>
+<span class="sd">    describing the center of each stand-alone non-zero component in the image</span>
+
+<span class="sd">    ANTsR function: `getCentroids`</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    img : ANTsImage</span>
+<span class="sd">        image from which centroids will be calculated</span>
+
+<span class="sd">    clustparam : integer    </span>
+<span class="sd">        look at regions greater than or equal to this size</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; img = ants.image_read( ants.get_ants_data( &quot;r16&quot; ) )</span>
+<span class="sd">    &gt;&gt;&gt; img = ants.threshold_image( img, 90, 120 )</span>
+<span class="sd">    &gt;&gt;&gt; img = ants.label_clusters( img, 10 )</span>
+<span class="sd">    &gt;&gt;&gt; cents = ants.get_centroids( img  )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">imagedim</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">dimension</span>
+    <span class="k">if</span> <span class="n">clustparam</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">mypoints</span> <span class="o">=</span> <span class="n">label_clusters</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">clustparam</span><span class="p">,</span> <span class="n">max_thresh</span><span class="o">=</span><span class="mi">1</span><span class="n">e15</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">clustparam</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">mypoints</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">mypoints</span> <span class="o">=</span> <span class="n">label_stats</span><span class="p">(</span><span class="n">mypoints</span><span class="p">,</span> <span class="n">mypoints</span><span class="p">)</span>
+    <span class="n">mypoints</span> <span class="o">=</span> <span class="n">mypoints</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">mypoints</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">mypoints</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">imagedim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">mypoints</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mypoints</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">imagedim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">mypoints</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mypoints</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">centroids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">t</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">centroids</span></div>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Torch Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

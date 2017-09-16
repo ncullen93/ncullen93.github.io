@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vis &mdash; PyTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="PyTorch master documentation" href="index.html"/>
+        <link rel="prev" title="utils" href="utils.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/pytorch-logo-dark.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage-io">ANTsImage IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform-io">ANTsTransform IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">vis</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyTorch</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>vis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/vis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ants">
+<span id="vis"></span><h1>vis<a class="headerlink" href="#module-ants" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="ants.plot">
+<code class="descclassname">ants.</code><code class="descname">plot</code><span class="sig-paren">(</span><em>img</em>, <em>title=None</em>, <em>margin=0.05</em>, <em>dpi=80</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/viz/plot.html#plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot an ANTsImage</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.surf">
+<code class="descclassname">ants.</code><code class="descname">surf</code><span class="sig-paren">(</span><em>x</em>, <em>y=None</em>, <em>z=None</em>, <em>quantlimits=(0.1</em>, <em>0.9)</em>, <em>colormap='jet'</em>, <em>alpha=None</em>, <em>inflation_factor=25</em>, <em>smoothing_sigma=0.0</em>, <em>rotation_params=(90</em>, <em>0</em>, <em>270)</em>, <em>overlay_limits=None</em>, <em>filename=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/viz/surface.html#surf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.surf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a function onto a surface.</p>
+<dl class="docutils">
+<dt>ANTsR function: <cite>antsrSurf</cite></dt>
+<dd>NOTE: the ANTsPy version of this function does NOT make a function call
+to ANTs, unlike the ANTsR version, so you don&#8217;t have to worry about paths.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image defining the surface on which to render</li>
+<li><strong>y</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image list defining the function to render on the surface.
+these image(s) should be in the same space as x.</li>
+<li><strong>z</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image list mask for each y function to render on the surface.
+these image(s) should be in the same space as y.</li>
+<li><strong>quantlimits</strong> (<em>tuple/list</em>) &#8211; lower and upper quantile limits for overlay</li>
+<li><strong>colormap</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; one of: grey, red, green, blue, copper, jet, hsv, spring, summer,
+autumn, winter, hot, cool, overunder, custom</li>
+<li><strong>alpha</strong> (<em>scalar</em>) &#8211; transparency vector for underlay and each overlay, default zero</li>
+<li><strong>inflation_factor</strong> (<em>integer</em>) &#8211; number of inflation iterations to run</li>
+<li><strong>smoothing_sigma</strong> (<em>scalar</em>) &#8211; gaussian smooth the overlay by this sigma</li>
+<li><strong>rotation_params</strong> (<em>tuple/list/ndarray</em>) &#8211; 3 Rotation angles expressed in degrees or a matrix of rotation
+parameters that will be applied in sequence.</li>
+<li><strong>overlay_limits</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; absolute lower and upper limits for functional overlay. this parameter
+will override quantlimits. Currently, this will set levels above
+overlayLimits[2] to overlayLimits[1]. Can be a list of length of y.</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; prefix filename for output pngs</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; prints the command used to call antsSurf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">N/A</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wm2</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/wm2.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kimg2</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/kimg2.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wmz</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/wmz.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rps</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">90</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">90</span><span class="p">),</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">270</span><span class="p">),</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ants</span><span class="o">.</span><span class="n">Surf</span><span class="p">(</span> <span class="n">x</span><span class="o">=</span><span class="n">wm2</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">kimg</span><span class="p">],</span> <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="n">wmz</span><span class="p">],</span>
+<span class="go">            inflation_factor=255, overlay_limits=(-0.3,0.3), verbose = True,</span>
+<span class="go">            rotation_params = rp, filename=&#39;/users/ncullen/desktop/surface.png&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.vol">
+<code class="descclassname">ants.</code><code class="descname">vol</code><span class="sig-paren">(</span><em>volume</em>, <em>overlays=None</em>, <em>quantlimits=(0.1</em>, <em>0.9)</em>, <em>colormap='jet'</em>, <em>rotation_params=(90</em>, <em>0</em>, <em>270)</em>, <em>overlay_limits=None</em>, <em>magnification_factor=1.0</em>, <em>intensity_truncation=(0.0</em>, <em>1.0)</em>, <em>filename=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/viz/volume.html#vol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.vol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render an ANTsImage as a volume with optional ANTsImage functional overlay.
+This function is beautiful, and runs very fast. It requires VTK.</p>
+<dl class="docutils">
+<dt>ANTsR function: <cite>antsrVol</cite></dt>
+<dd>NOTE: the ANTsPy version of this function does NOT make a function call
+to ANTs, unlike the ANTsR version, so you don&#8217;t have to worry about paths.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>volume</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; base volume to render</li>
+<li><strong>overlay</strong> (<em>list of ANTsImages</em>) &#8211; functional overlay to render on the volume image.
+These images should be in the same space</li>
+<li><strong>colormap</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; <dl class="docutils">
+<dt>possible values:</dt>
+<dd>grey, red, green, blue, copper, jet,
+hsv, spring, summer, autumn, winter,
+hot, cool, overunder, custom</dd>
+</dl>
+</li>
+<li><strong>rotation_params</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a><em> or </em><em>collection of tuples</em><em> or </em><em>np.ndarray w/ shape</em><em> (</em><em>N</em><em>,</em><em>3</em><em>)</em><em></em>) &#8211; <p>rotation parameters to render. The final image will be a stitch of each image
+from the given rotation params.
+e.g. if rotation_params = [(90,90,90),(180,180,180)], then the final</p>
+<blockquote>
+<div>stiched image will have 2 brain renderings at those angles</div></blockquote>
+</li>
+<li><strong>overlay_limts</strong> &#8211; </li>
+<li><strong>magnification_factor</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; how much to zoom in on the image before rendering. If the stitched images
+are too far apart, try increasing this value. If the brain volume gets
+cut off in the image, try decreasing this value</li>
+<li><strong>intensity_truncation</strong> (<em>2-tuple of python:float</em>) &#8211; percentile to truncate intensity of overlay</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; final filename to which the final rendered volume stitch image will be saved
+this will always be a .png file</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; whether to print updates during rendering</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>- a numpy array representing the final stitched image.</em></li>
+<li><em>Effects</em></li>
+<li><em>&#8212;&#8212;-</em></li>
+<li><em>- saves a few png files to disk</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wm</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/wm.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kimg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/kimg.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wm</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;mni&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rp1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">90</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rp2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rp3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">270</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">90</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ants</span><span class="o">.</span><span class="n">Vol</span><span class="p">(</span><span class="n">wm</span><span class="p">,</span> <span class="n">kimg</span><span class="p">,</span> <span class="n">rotation_params</span><span class="o">=</span><span class="p">(</span><span class="n">rp1</span><span class="p">,</span><span class="n">rp2</span><span class="p">,</span><span class="n">rp3</span><span class="p">),</span> <span class="n">quantlimits</span><span class="o">=</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.99</span><span class="p">),</span>
+<span class="go">    filename=&#39;~/desktop/image.png&#39;, colormap=&#39;jet&#39;,</span>
+<span class="go">    magnification_factor=1.9, verbose=True)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.render_surface_function">
+<code class="descclassname">ants.</code><code class="descname">render_surface_function</code><span class="sig-paren">(</span><em>surfimg</em>, <em>funcimg=None</em>, <em>alphasurf=0.2</em>, <em>alphafunc=1.0</em>, <em>isosurf=0.5</em>, <em>isofunc=0.5</em>, <em>smoothsurf=None</em>, <em>smoothfunc=None</em>, <em>cmapsurf='grey'</em>, <em>cmapfunc='red'</em>, <em>filename=None</em>, <em>notebook=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/viz/render_surface_function.html#render_surface_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.render_surface_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render an image as a base surface and an optional collection of other image.</p>
+<dl class="docutils">
+<dt>ANTsR function: <cite>renderSurfaceFunction</cite></dt>
+<dd>NOTE: The ANTsPy version of this function is actually completely different
+than the ANTsR version, although they should produce similar results.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>surfimg</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; Input image to use as rendering substrate.</li>
+<li><strong>funcimg</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; Input list of images to use as functional overlays.</li>
+<li><strong>alphasurf</strong> (<em>scalar</em>) &#8211; alpha for the surface contour</li>
+<li><strong>alphafunc</strong> (<em>scalar</em>) &#8211; alpha value for functional blobs</li>
+<li><strong>isosurf</strong> (<em>scalar</em>) &#8211; intensity level that defines lower threshold for surface image</li>
+<li><strong>isofunc</strong> (<em>scalar</em>) &#8211; intensity level that defines lower threshold for functional image</li>
+<li><strong>smoothsurf</strong> (<em>scalar</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; smoothing for the surface image</li>
+<li><strong>smoothfunc</strong> (<em>scalar</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; smoothing for the functional image</li>
+<li><strong>cmapsurf</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; color map for surface image</li>
+<li><strong>cmapfunc</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; color map for functional image</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; where to save rendering. if None, will plot interactively</li>
+<li><strong>notebook</strong> (<em>boolean</em>) &#8211; whether you&#8217;re in a jupyter notebook.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">N/A</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mnit</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/mnit.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mnia</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="s1">&#39;~/desktop/mnia.nii.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ants</span><span class="o">.</span><span class="n">render_surface_function</span><span class="p">(</span><span class="n">mnit</span><span class="p">,</span> <span class="n">mnia</span><span class="p">,</span> <span class="n">alphasurf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="utils.html" class="btn btn-neutral" title="utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Torch Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

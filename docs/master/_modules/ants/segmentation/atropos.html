@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ants.segmentation.atropos &mdash; PyTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="PyTorch master documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/pytorch-logo-dark.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimage-io">ANTsImage IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antstransform-io">ANTsTransform IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vis.html">vis</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyTorch</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ants.segmentation.atropos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ants.segmentation.atropos</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Atropos segmentation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+ 
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;atropos&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">mktemp</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">ants_image_io</span> <span class="k">as</span> <span class="n">iio2</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">lib</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">utils</span>
+
+
+<div class="viewcode-block" id="atropos"><a class="viewcode-back" href="../../../segmentation.html#ants.atropos">[docs]</a><span class="k">def</span> <span class="nf">atropos</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="s1">&#39;Kmeans[3]&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="s1">&#39;[0.2,1x1]&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;[5,0]&#39;</span><span class="p">,</span> 
+            <span class="n">priorweight</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A finite mixture modeling (FMM) segmentation approach with possibilities </span>
+<span class="sd">    for specifying prior constraints. These prior constraints include the </span>
+<span class="sd">    specification of a prior label image, prior probability images (one for </span>
+<span class="sd">    each class), and/or an MRF prior to enforce spatial smoothing of the </span>
+<span class="sd">    labels. Similar algorithms include FAST and SPM. atropos can also perform </span>
+<span class="sd">    multivariate segmentation if you pass a list of images in: e.g. a=(img1,img2).</span>
+
+<span class="sd">    ANTsR function: `atropos`</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    a : ANTsImage or list/tuple of ANTsImage types</span>
+<span class="sd">        One or more scalar images to segment. If priors are not used, </span>
+<span class="sd">        the intensities of the first image are used to order the classes </span>
+<span class="sd">        in the segmentation output, from lowest to highest intensity. Otherwise </span>
+<span class="sd">        the order of the classes is dictated by the order of the prior images.</span>
+<span class="sd">    </span>
+<span class="sd">    x : ANTsImage</span>
+<span class="sd">        mask image.</span>
+<span class="sd">    </span>
+<span class="sd">    i : string </span>
+<span class="sd">        initialization usually KMeans[N] for N classes or a list of N prior</span>
+<span class="sd">        probability images. See Atropos in ANTs for full set of options.</span>
+<span class="sd">    </span>
+<span class="sd">    m : string</span>
+<span class="sd">        mrf parameters as a string, usually &quot;[smoothingFactor,radius]&quot; where </span>
+<span class="sd">        smoothingFactor determines the amount of smoothing and radius determines </span>
+<span class="sd">        the MRF neighborhood, as an ANTs style neighborhood vector eg &quot;1x1x1&quot; </span>
+<span class="sd">        for a 3D image. The radius must match the dimensionality of the image, </span>
+<span class="sd">        eg 1x1 for 2D and The default in ANTs is smoothingFactor=0.3 and </span>
+<span class="sd">        radius=1. See Atropos for more options.</span>
+<span class="sd">    </span>
+<span class="sd">    c : string</span>
+<span class="sd">        convergence parameters, &quot;[numberOfIterations,convergenceThreshold]&quot;. </span>
+<span class="sd">        A threshold of 0 runs the full numberOfIterations, otherwise Atropos </span>
+<span class="sd">        tests convergence by comparing the mean maximum posterior probability </span>
+<span class="sd">        over the whole region of interest defined by the mask x.</span>
+<span class="sd">    </span>
+<span class="sd">    priorweight : scalar</span>
+<span class="sd">        usually 0 (priors used for initialization only), 0.25 or 0.5.</span>
+<span class="sd">    </span>
+<span class="sd">    kwargs : keyword arguments </span>
+<span class="sd">        more parameters, see Atropos help in ANTs</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dictionary with the following key/value pairs:</span>
+<span class="sd">        `segmentation`: ANTsImage </span>
+<span class="sd">            actually segmented image</span>
+<span class="sd">        `probabilityimages` : list of ANTsImage types</span>
+<span class="sd">            one image for each segmentation class</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; import ants</span>
+<span class="sd">    &gt;&gt;&gt; img = ants.image_read(ants.get_ants_data(&#39;r16&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; img = ants.resample_image(img, (64,64), 1, 0)</span>
+<span class="sd">    &gt;&gt;&gt; mask = ants.get_mask(img)</span>
+<span class="sd">    &gt;&gt;&gt; ants.atropos( a = img, m = &#39;[0.2,1x1]&#39;, c = &#39;[2,0]&#39;,  i = &#39;kmeans[3]&#39;, x = mask )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;antsr&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;prob</span><span class="si">%02d</span><span class="s1">.nii.gz&#39;</span><span class="p">)</span>
+    <span class="n">tdir</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">probs</span><span class="p">),</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">probsbase</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+    <span class="n">searchpattern</span> <span class="o">=</span> <span class="n">probsbase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%02d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+
+    <span class="n">ct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">ct</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">probchar</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ct</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">probchar</span> <span class="o">=</span> <span class="s1">&#39;0</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">probchar</span>
+            <span class="n">tempfn</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%02d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;probchar&#39;</span><span class="p">)</span>
+            <span class="n">iio2</span><span class="o">.</span><span class="n">image_write</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="n">ct</span><span class="p">],</span> <span class="n">tempfn</span><span class="p">)</span>
+            <span class="n">ct</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="s1">&#39;PriorProbabilityImages[</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span> <span class="n">probs</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">priorweight</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">outimg</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;unsigned int&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">outimg</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;unsigned int&#39;</span><span class="p">)</span>
+
+    <span class="n">mydim</span> <span class="o">=</span> <span class="n">outimg</span><span class="o">.</span><span class="n">dimension</span>
+    <span class="n">outs</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_ptrstr</span><span class="p">(</span><span class="n">outimg</span><span class="o">.</span><span class="n">pointer</span><span class="p">),</span> <span class="n">probs</span><span class="p">)</span>
+    <span class="n">mymask</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;unsigned int&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">myargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">mydim</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+            <span class="s1">&#39;m-MULTINAME-0&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+            <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="n">outs</span><span class="p">,</span>
+            <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span>
+            <span class="s1">&#39;m-MULTINAME-1&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+            <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">mymask</span>
+        <span class="p">}</span>
+        <span class="c1">#for k, v in kwargs.items():</span>
+        <span class="c1">#    myargs[k] = v</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;more than 6 input images not really supported, using first 6&#39;</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">myargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">mydim</span><span class="p">,</span>
+            <span class="s1">&#39;m-MULTINAME-0&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+            <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="n">outs</span><span class="p">,</span>
+            <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span>
+            <span class="s1">&#39;m-MULTINAME-1&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+            <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">mymask</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">aa_idx</span><span class="p">,</span> <span class="n">aa</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+            <span class="n">myargs</span><span class="p">[</span><span class="s1">&#39;a-MULTINAME-</span><span class="si">%i</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">aa_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">aa</span>
+
+    <span class="n">processed_args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_int_antsProcessArguments</span><span class="p">(</span><span class="n">myargs</span><span class="p">)</span>
+    <span class="n">lib</span><span class="o">.</span><span class="n">Atropos</span><span class="p">(</span><span class="n">processed_args</span><span class="p">)</span>
+    
+    <span class="n">probsout</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tdir</span><span class="p">,</span><span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">searchpattern</span><span class="p">))</span>
+    <span class="n">probimgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">iio2</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">probsout</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">probsout</span><span class="p">)):</span>
+        <span class="n">probimgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iio2</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">probsout</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+
+    <span class="n">outimg</span> <span class="o">=</span> <span class="n">outimg</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;segmentation&#39;</span><span class="p">:</span> <span class="n">outimg</span><span class="p">,</span>
+            <span class="s1">&#39;probabilityimages&#39;</span><span class="p">:</span> <span class="n">probimgs</span><span class="p">}</span></div>
+
+    
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Torch Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
