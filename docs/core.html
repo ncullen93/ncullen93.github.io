@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Core &mdash; PyTorch master documentation</title>
+  <title>Core &mdash; ANTsPy master documentation</title>
   
 
   
@@ -39,7 +39,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="PyTorch master documentation" href="index.html"/>
+    <link rel="top" title="ANTsPy master documentation" href="index.html"/>
+        <link rel="next" title="Registration" href="registration.html"/>
         <link rel="prev" title="ANTsPy documentation" href="index.html"/> 
 
   
@@ -64,7 +65,7 @@
 
           
             
-            <img src="_static/pytorch-logo-dark.svg" class="logo" />
+            <img src="_static/antspy-logo.png" class="logo" />
           
           </a>
 
@@ -99,14 +100,28 @@
               <p class="caption"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Core</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#antsimage">ANTsImage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#antsimage-io">ANTsImage IO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#antstransform">ANTsTransform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#antstransform-io">ANTsTransform IO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#antsmetric-io">ANTsMetric IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#images">Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#antsimage">ANTsImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#antsimage-io">ANTsImage IO</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#transforms">Transforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#antstransform">ANTsTransform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#antstransform-io">ANTsTransform IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#antsmetric">ANTsMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Statistical Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vis.html">Visualization</a></li>
 </ul>
 
             
@@ -121,7 +136,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">PyTorch</a>
+          <a href="index.html">ANTsPy</a>
         
       </nav>
 
@@ -172,8 +187,10 @@
             
   <div class="section" id="module-ants">
 <span id="core"></span><h1>Core<a class="headerlink" href="#module-ants" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="images">
+<h2>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="antsimage">
-<h2>ANTsImage<a class="headerlink" href="#antsimage" title="Permalink to this headline">¶</a></h2>
+<h3>ANTsImage<a class="headerlink" href="#antsimage" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="ants.core.ants_image.ANTsImage">
 <em class="property">class </em><code class="descclassname">ants.core.ants_image.</code><code class="descname">ANTsImage</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_image.html#ANTsImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.core.ants_image.ANTsImage" title="Permalink to this definition">¶</a></dt>
@@ -553,7 +570,7 @@ will also be altered.</p>
 
 </div>
 <div class="section" id="antsimage-io">
-<h2>ANTsImage IO<a class="headerlink" href="#antsimage-io" title="Permalink to this headline">¶</a></h2>
+<h3>ANTsImage IO<a class="headerlink" href="#antsimage-io" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="ants.image_clone">
 <code class="descclassname">ants.</code><code class="descname">image_clone</code><span class="sig-paren">(</span><em>img</em>, <em>pixeltype=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_image_io.html#image_clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.image_clone" title="Permalink to this definition">¶</a></dt>
@@ -871,8 +888,11 @@ shape = (N_IMAGES, N_VOXELS)</p>
 </dd></dl>
 
 </div>
+</div>
+<div class="section" id="transforms">
+<h2>Transforms<a class="headerlink" href="#transforms" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="antstransform">
-<h2>ANTsTransform<a class="headerlink" href="#antstransform" title="Permalink to this headline">¶</a></h2>
+<h3>ANTsTransform<a class="headerlink" href="#antstransform" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="ants.core.ants_transform.ANTsTransform">
 <em class="property">class </em><code class="descclassname">ants.core.ants_transform.</code><code class="descname">ANTsTransform</code><span class="sig-paren">(</span><em>tx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_transform.html#ANTsTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.core.ants_transform.ANTsTransform" title="Permalink to this definition">¶</a></dt>
@@ -977,7 +997,7 @@ shape = (N_IMAGES, N_VOXELS)</p>
 
 </div>
 <div class="section" id="antstransform-io">
-<h2>ANTsTransform IO<a class="headerlink" href="#antstransform-io" title="Permalink to this headline">¶</a></h2>
+<h3>ANTsTransform IO<a class="headerlink" href="#antstransform-io" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="ants.create_ants_transform">
 <code class="descclassname">ants.</code><code class="descname">create_ants_transform</code><span class="sig-paren">(</span><em>transform_type='AffineTransform'</em>, <em>precision='float'</em>, <em>dimension=3</em>, <em>matrix=None</em>, <em>offset=None</em>, <em>center=None</em>, <em>translation=None</em>, <em>parameters=None</em>, <em>fixed_parameters=None</em>, <em>displacement_field=None</em>, <em>supported_types=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_transform_io.html#create_ants_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.create_ants_transform" title="Permalink to this definition">¶</a></dt>
@@ -1123,8 +1143,11 @@ shape = (N_IMAGES, N_VOXELS)</p>
 </dd></dl>
 
 </div>
-<div class="section" id="antsimagetoimagemetric">
-<h2>ANTsImageToImageMetric<a class="headerlink" href="#antsimagetoimagemetric" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="antsmetric">
+<h3>ANTsMetric<a class="headerlink" href="#antsmetric" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="ants.core.ants_metric.ANTsImageToImageMetric">
 <em class="property">class </em><code class="descclassname">ants.core.ants_metric.</code><code class="descname">ANTsImageToImageMetric</code><span class="sig-paren">(</span><em>metric</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_metric.html#ANTsImageToImageMetric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.core.ants_metric.ANTsImageToImageMetric" title="Permalink to this definition">¶</a></dt>
@@ -1157,7 +1180,7 @@ shape = (N_IMAGES, N_VOXELS)</p>
 
 </div>
 <div class="section" id="antsmetric-io">
-<h2>ANTsMetric IO<a class="headerlink" href="#antsmetric-io" title="Permalink to this headline">¶</a></h2>
+<h3>ANTsMetric IO<a class="headerlink" href="#antsmetric-io" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="ants.new_ants_metric">
 <code class="descclassname">ants.</code><code class="descname">new_ants_metric</code><span class="sig-paren">(</span><em>dimension=3</em>, <em>precision='float'</em>, <em>metric_type='MeanSquares'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/core/ants_metric_io.html#new_ants_metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.new_ants_metric" title="Permalink to this definition">¶</a></dt>
@@ -1200,6 +1223,7 @@ JointHistogramMutualInformation</div></blockquote>
 
 </div>
 </div>
+</div>
 
 
            </div>
@@ -1211,6 +1235,8 @@ JointHistogramMutualInformation</div></blockquote>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="registration.html" class="btn btn-neutral float-right" title="Registration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="index.html" class="btn btn-neutral" title="ANTsPy documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -1221,7 +1247,7 @@ JointHistogramMutualInformation</div></blockquote>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Torch Contributors.
+        &copy; Copyright 2017, ANTs Contributors.
 
     </p>
   </div>

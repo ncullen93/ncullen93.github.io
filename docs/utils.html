@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utilities &mdash; PyTorch master documentation</title>
+  <title>Utilities &mdash; ANTsPy master documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="PyTorch master documentation" href="index.html"/>
+    <link rel="top" title="ANTsPy master documentation" href="index.html"/>
         <link rel="next" title="Visualization" href="vis.html"/>
         <link rel="prev" title="Statistical Learning" href="learn.html"/> 
 
@@ -65,7 +65,7 @@
 
           
             
-            <img src="_static/pytorch-logo-dark.svg" class="logo" />
+            <img src="_static/antspy-logo.png" class="logo" />
           
           </a>
 
@@ -100,12 +100,21 @@
               <p class="caption"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage">ANTsImage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antsimage-io">ANTsImage IO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform">ANTsTransform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antstransform-io">ANTsTransform IO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antsimagetoimagemetric">ANTsImageToImageMetric</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#antsmetric-io">ANTsMetric IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#images">Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsimage-io">ANTsImage IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#transforms">Transforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antstransform-io">ANTsTransform IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsmetric">ANTsMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="registration.html">Registration</a></li>
@@ -127,7 +136,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">PyTorch</a>
+          <a href="index.html">ANTsPy</a>
         
       </nav>
 
@@ -709,8 +718,8 @@ description. Some operations may not be valid (WIP), but most are.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>ndarray</em>) &#8211; data to impute</li>
-<li><strong>method</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a><em> or </em><em>scalar</em>) &#8211; <p>type of imputation method to use
+<li><strong>data</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) &#8211; data to impute</li>
+<li><strong>method</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a><em> or </em><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; <p>type of imputation method to use
 Options:</p>
 <blockquote>
 <div>mean
@@ -1199,7 +1208,7 @@ it is possible to specify which label(s) to mask at.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Torch Contributors.
+        &copy; Copyright 2017, ANTs Contributors.
 
     </p>
   </div>
