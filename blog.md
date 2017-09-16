@@ -1,5 +1,5 @@
 ---
-title: ANTs | Blog
+title: PyTorch | Blog
 id: blog
 permalink: /blog/
 layout: blog

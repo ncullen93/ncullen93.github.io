@@ -1,5 +1,5 @@
 ---
-title: ANTs
+title: PyTorch
 id: home
 permalink: /
 layout: default
@@ -8,8 +8,9 @@ layout: default
 <section class="hero wrap">
     <div class="container">
         <div class="inner">
-            <h1>Advanced Normalization Tools Ecosystem for Medical Image Analysis</h1>
-            <h2>Our ecosystem includes ANTs, ANTsR, and ANTsR</h2>
+            <h1>TEST TEST Tensors and Dynamic neural networks in&nbsp;Python <br> with strong GPU acceleration.</h1>
+            <h2>PyTorch is a deep learning framework that puts Python first.</h2>
+            <h2>We are in an early-release Beta. Expect some adventures.</h2>
             <a class="btn" href="/about/">Learn More</a>
         </div>
     </div>
@@ -21,16 +22,41 @@ layout: default
         <div class="row">
             <div class="col-md-5 title">
                 <h3>Get Started.</h3>
-                <h4>Select your preferences, then run the <br> ANTsPy install commands. <br /> <br /> 
+                <h4>Select your preferences, then run the <br> PyTorch install command. <br /> <br /> <b>Please ensure that you are on the latest pip and numpy packages. <br /> Anaconda is our recommended package manager</b></h4>
             </div>
             <div class="col-md-7 options-sets">
                 <div class="option-row os" data-key="os">
                     <div class="option-label">OS</div>
                     <div class="option-set">
-                        <div class="btn">Linux</div>
-                        <div class="btn selected">OSX</div>
+                        <div class="btn selected">Linux</div>
+                        <div class="btn">OSX</div>
                     </div>
                 </div>
+                <div class="option-row pm" data-key="pm">
+                    <div class="option-label">Package Manager</div>
+                    <div class="option-set">
+                        <div class="btn selected">conda</div>
+                        <div class="btn">pip</div>
+                        <div class="btn">Source</div>
+                    </div>
+                </div>
+                <div class="option-row python" data-key="python">
+                    <div class="option-label">Python</div>
+                    <div class="option-set">
+                        <div class="btn">2.7</div>
+                        <div class="btn selected">3.5</div>
+                        <div class="btn">3.6</div>
+                    </div>
+                </div>
+                <div class="option-row cuda" data-key="cuda">
+                    <div class="option-label">CUDA</div>
+                    <div class="option-set">
+                        <div class="btn">7.5</div>
+                        <div class="btn selected">8.0</div>
+                        <div class="btn">None</div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="command">
@@ -120,18 +146,15 @@ layout: default
     (function($, cmdMap) {
         var cmdTxt = $('.command .text');
         var opts = {
-            //cuda: '8.0',
-            os: 'OSX',
-            //pm: 'conda',
-           // python: '3.5'
+            cuda: '8.0',
+            os: 'linux',
+            pm: 'conda',
+            python: '3.5'
         };
 
-        //function buildMatcher() {
-        //    return opts.pm.toLowerCase() + ',' + opts.os.toLowerCase() + ',cuda'
-        //           + opts.cuda.toLowerCase() + ',python' + opts.python.toLowerCase();
-        //}
         function buildMatcher() {
-            return opts.os.toLowerCase();
+            return opts.pm.toLowerCase() + ',' + opts.os.toLowerCase() + ',cuda'
+                   + opts.cuda.toLowerCase() + ',python' + opts.python.toLowerCase();
         }
 
         function updateCommand() {
