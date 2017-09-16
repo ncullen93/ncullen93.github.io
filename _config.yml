@@ -1,6 +1,6 @@
-url: http://pytorch.org
-name: PyTorch
-description: 'Scientific Computing...'
+url: http://ncullen.github.io
+name: ANTs
+description: 'Medical Imaging...'
 latest_version: 1.0
 baseurl:
 relative_permalinks: false

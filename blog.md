@@ -1,8 +1,8 @@
 ---
-title: PyTorch | Blog
+title: ANTs | Blog
 id: blog
 permalink: /blog/
 layout: blog
 ---
 
-### The ANTsPy Blog
+### The ANTs Blog
