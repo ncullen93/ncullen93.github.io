@@ -1,5 +1,5 @@
 ---
-title: PyTorch | About
+title: ANTs | About
 id: about
 permalink: /about/
 layout: about

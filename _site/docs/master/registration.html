@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Registration &mdash; ANTsPy master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ANTsPy master documentation" href="index.html"/>
+        <link rel="next" title="Segmentation" href="segmentation.html"/>
+        <link rel="prev" title="Core" href="core.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/antspy-logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#images">Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsimage-io">ANTsImage IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#transforms">Transforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antstransform-io">ANTsTransform IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsmetric">ANTsMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Statistical Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vis.html">Visualization</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ANTsPy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Registration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/registration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ants">
+<span id="registration"></span><h1>Registration<a class="headerlink" href="#module-ants" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="ants.registration">
+<code class="descclassname">ants.</code><code class="descname">registration</code><span class="sig-paren">(</span><em>fixed</em>, <em>moving</em>, <em>type_of_transform='SyN'</em>, <em>initial_transform=None</em>, <em>outprefix=''</em>, <em>mask=None</em>, <em>grad_step=0.2</em>, <em>flow_sigma=3</em>, <em>total_sigma=0</em>, <em>aff_metric='mattes'</em>, <em>aff_sampling=32</em>, <em>syn_metric='mattes'</em>, <em>syn_sampling=32</em>, <em>reg_iterations=(40</em>, <em>20</em>, <em>0)</em>, <em>verbose=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/interface.html#registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.registration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a pair of images either through the full or simplified
+interface to the ANTs registration method.</p>
+<p>ANTsR function: <cite>antsRegistration</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; fixed image to which we register the moving image.</li>
+<li><strong>moving</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; moving image to be mapped to fixed space.</li>
+<li><strong>type_of_transform</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; A linear or non-linear registration type. Mutual information metric by default.
+See Notes below for more.</li>
+<li><strong>initial_transform</strong> (<em>list of strings</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; transforms to prepend</li>
+<li><strong>outprefix</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; output will be named with this prefix.</li>
+<li><strong>mask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; mask the registration.</li>
+<li><strong>grad_step</strong> (<em>scalar</em>) &#8211; gradient step size (not for all tx)</li>
+<li><strong>flow_sigma</strong> (<em>scalar</em>) &#8211; smoothing for update field</li>
+<li><strong>total_sigma</strong> (<em>scalar</em>) &#8211; smoothing for total field</li>
+<li><strong>aff_metric</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the metric for the affine part (GC, mattes, meansquares)</li>
+<li><strong>aff_sampling</strong> (<em>scalar</em>) &#8211; the nbins or radius parameter for the syn metric</li>
+<li><strong>syn_metric</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the metric for the syn part (CC, mattes, meansquares, demons)</li>
+<li><strong>syn_sampling</strong> (<em>scalar</em>) &#8211; the nbins or radius parameter for the syn metric</li>
+<li><strong>reg_iterations</strong> (<em>list/tuple of python:integers</em>) &#8211; vector of iterations for syn. we will set the smoothing and multi-resolution parameters based on the length of this vector.</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; request verbose output (useful for debugging)</li>
+<li><strong>kwargs</strong> (<em>keyword args</em>) &#8211; extra arguments</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><cite>warpedmovout</cite>: Moving image warped to space of fixed image.
+<cite>warpedfixout</cite>: Fixed image warped to space of moving image.
+<cite>fwdtransforms</cite>: Transforms to move from moving to fixed image.
+<cite>invtransforms</cite>: Transforms to move from fixed to moving image.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict containing follow key/value pairs</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<dl class="docutils">
+<dt>typeofTransform can be one of:</dt>
+<dd><ul class="first last simple">
+<li>&#8220;Translation&#8221;: Translation transformation.</li>
+<li>&#8220;Rigid&#8221;: Rigid transformation: Only rotation and translation.</li>
+<li>&#8220;Similarity&#8221;: Similarity transformation: scaling, rotation and translation.</li>
+<li><dl class="first docutils">
+<dt>&#8220;QuickRigid&#8221;: Rigid transformation: Only rotation and translation.</dt>
+<dd>May be useful for quick visualization fixes.&#8217;</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;DenseRigid&#8221;: Rigid transformation: Only rotation and translation.</dt>
+<dd>Employs dense sampling during metric estimation.&#8217;</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;BOLDRigid&#8221;: Rigid transformation: Parameters typical for BOLD to</dt>
+<dd>BOLD intrasubject registration&#8217;.&#8217;</dd>
+</dl>
+</li>
+<li>&#8220;Affine&#8221;: Affine transformation: Rigid + scaling.</li>
+<li>&#8220;AffineFast&#8221;: Fast version of Affine.</li>
+<li><dl class="first docutils">
+<dt>&#8220;BOLDAffine&#8221;: Affine transformation: Parameters typical for BOLD to</dt>
+<dd>BOLD intrasubject registration&#8217;.&#8217;</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;TRSAA&#8221;: translation, rigid, similarity, affine (twice). please set</dt>
+<dd>regIterations if using this option. this would be used in
+cases where you want a really high quality affine mapping
+(perhaps with mask).</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;ElasticSyN&#8221;: Symmetric normalization: Affine + deformable</dt>
+<dd>transformation, with mutual information as optimization
+metric and elastic regularization.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SyN&#8221;: Symmetric normalization: Affine + deformable transformation,</dt>
+<dd>with mutual information as optimization metric.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SyNRA&#8221;: Symmetric normalization: Rigid + Affine + deformable</dt>
+<dd>transformation, with mutual information as optimization metric.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SyNOnly&#8221;: Symmetric normalization: no initial transformation,</dt>
+<dd>with mutual information as optimization metric. Assumes
+images are aligned by an inital transformation. Can be
+useful if you want to run an unmasked affine followed by
+masked deformable registration.</dd>
+</dl>
+</li>
+<li>&#8220;SyNCC&#8221;: SyN, but with cross-correlation as the metric.</li>
+<li>&#8220;SyNabp&#8221;: SyN optimized for abpBrainExtraction.</li>
+<li>&#8220;SyNBold&#8221;: SyN, but optimized for registrations between BOLD and T1 images.</li>
+<li><dl class="first docutils">
+<dt>&#8220;SyNBoldAff&#8221;: SyN, but optimized for registrations between BOLD</dt>
+<dd>and T1 images, with additional affine step.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SyNAggro&#8221;: SyN, but with more aggressive registration</dt>
+<dd>(fine-scale matching and more deformation).
+Takes more time than SyN.</dd>
+</dl>
+</li>
+<li>&#8220;TVMSQ&#8221;: time-varying diffeomorphism with mean square metric</li>
+<li>&#8220;TVMSQC&#8221;: time-varying diffeomorphism with mean square metric for very large deformation</li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r64&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">mi</span><span class="p">,</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mytx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">registration</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">fi</span><span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">mi</span><span class="p">,</span> <span class="n">type_of_transform</span> <span class="o">=</span> <span class="s1">&#39;SyN&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.affine_initializer">
+<code class="descclassname">ants.</code><code class="descname">affine_initializer</code><span class="sig-paren">(</span><em>fixed_image</em>, <em>moving_image</em>, <em>search_factor=20</em>, <em>radian_fraction=0.1</em>, <em>use_principal_axis=False</em>, <em>local_search_iterations=10</em>, <em>mask=None</em>, <em>txfn=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/affine_initializer.html#affine_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.affine_initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A multi-start optimizer for affine registration
+Searches over the sphere to find a good initialization for further
+registration refinement, if needed.  This is a arapper for the ANTs
+function antsAffineInitializer.</p>
+<p>ANTsR function: <cite>affineInitializer</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed_image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; the fixed reference image</li>
+<li><strong>moving_image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; the moving image to be mapped to the fixed space</li>
+<li><strong>search_factor</strong> (<em>scalar</em>) &#8211; degree of increments on the sphere to search</li>
+<li><strong>radian_fraction</strong> (<em>scalar</em>) &#8211; between zero and one, defines the arc to search over</li>
+<li><strong>use_principal_axis</strong> (<em>boolean</em>) &#8211; boolean to initialize by principal axis</li>
+<li><strong>local_search_iterations</strong> (<em>scalar</em>) &#8211; gradient descent iterations</li>
+<li><strong>mask</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; optional mask to restrict registration</li>
+<li><strong>txfn</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; filename for the transformation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformation matrix</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r27&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">txfile</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">affine_initializer</span><span class="p">(</span> <span class="n">fi</span><span class="p">,</span> <span class="n">mi</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">read_transform</span><span class="p">(</span><span class="n">txfile</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.apply_transforms">
+<code class="descclassname">ants.</code><code class="descname">apply_transforms</code><span class="sig-paren">(</span><em>fixed</em>, <em>moving</em>, <em>transformlist</em>, <em>interpolator='linear'</em>, <em>imagetype=0</em>, <em>whichtoinvert=None</em>, <em>compose=None</em>, <em>verbose=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/apply_transforms.html#apply_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.apply_transforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a transform list to map an image from one domain to another.
+In image registration, one computes mappings between (usually) pairs
+of images. These transforms are often a sequence of increasingly
+complex maps, e.g. from translation, to rigid, to affine to deformation.
+The list of such transforms is passed to this function to interpolate one
+image domain into the next image domain, as below. The order matters
+strongly and the user is advised to familiarize with the standards
+established in examples.</p>
+<p>ANTsR function: <cite>antsApplyTransforms</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; fixed image defining domain into which the moving image is transformed.</li>
+<li><strong>moving</strong> (<em>AntsImage</em>) &#8211; moving image to be mapped to fixed space.</li>
+<li><strong>transformlist</strong> (<em>list of strings</em>) &#8211; list of transforms generated by ants.registration where each transform is a filename.</li>
+<li><strong>interpolator</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; <dl class="docutils">
+<dt>Choice of interpolator. Supports partial matching.</dt>
+<dd>linear
+nearestNeighbor
+multiLabel for label images but genericlabel is preferred
+gaussian
+bSpline
+cosineWindowedSinc
+welchWindowedSinc
+hammingWindowedSinc
+lanczosWindowedSinc
+genericLabel use this for label images</dd>
+</dl>
+</li>
+<li><strong>imagetype</strong> (<em>integer</em>) &#8211; choose 0/1/2/3 mapping to scalar/vector/tensor/time-series</li>
+<li><strong>whichtoinvert</strong> (<em>list of booleans</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; Must be same length as transformlist.
+whichtoinvert[i] is True if transformlist[i] is a matrix,
+and the matrix should be inverted. If transformlist[i] is a
+warp field, whichtoinvert[i] must be False.
+If the transform list is a matrix followed by a warp field,
+whichtoinvert defaults to (True,False). Otherwise it defaults
+to [False]*len(transformlist)).</li>
+<li><strong>compose</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; if it is a string pointing to a valid file location,
+this will force the function to return a composite transformation filename.</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; print command and run verbose application of transform.</li>
+<li><strong>kwargs</strong> (<em>keyword arguments</em>) &#8211; extra parameters</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a> or <a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)">string</a> (transformation filename)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fixed</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">moving</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r64&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fixed</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">moving</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">moving</span><span class="p">,</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mytx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">registration</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">fixed</span> <span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">moving</span> <span class="p">,</span>
+<span class="go">                             type_of_transform = &#39;SyN&#39; )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mywarpedimage</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">apply_transforms</span><span class="p">(</span> <span class="n">fixed</span><span class="o">=</span><span class="n">fixed</span><span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">moving</span><span class="p">,</span>
+<span class="go">                                           transformlist=mytx[&#39;fwdtransforms&#39;] )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.create_jacobian_determinant_image">
+<code class="descclassname">ants.</code><code class="descname">create_jacobian_determinant_image</code><span class="sig-paren">(</span><em>domain_img</em>, <em>tx</em>, <em>do_log=False</em>, <em>geom=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/create_jacobian_determinant_image.html#create_jacobian_determinant_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.create_jacobian_determinant_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the jacobian determinant from a transformation file</p>
+<p>ANTsR function: <cite>createJacobianDeterminantImage</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>domain_img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image that defines transformation domain</li>
+<li><strong>tx</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; deformation transformation file name</li>
+<li><strong>do_log</strong> (<em>boolean</em>) &#8211; return the log jacobian</li>
+<li><strong>geom</strong> (<em>bolean</em>) &#8211; use the geometric jacobian calculation (boolean)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">n3_bias_field_correction</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r64&#39;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mytx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">registration</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">fi</span><span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">mi</span><span class="p">,</span> <span class="n">type_of_transform</span><span class="o">=</span><span class="s1">&#39;SyN&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jac</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">create_jacobian_determinant_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">mytx</span><span class="p">[</span><span class="s1">&#39;fwdtransforms&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.create_warped_grid">
+<code class="descclassname">ants.</code><code class="descname">create_warped_grid</code><span class="sig-paren">(</span><em>img</em>, <em>grid_step=10</em>, <em>grid_width=2</em>, <em>grid_directions=(True</em>, <em>True)</em>, <em>fixed_reference_image=None</em>, <em>transform=None</em>, <em>foreground=1</em>, <em>background=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/create_warped_grid.html#create_warped_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.create_warped_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deforming a grid is a helpful way to visualize a deformation field.
+This function enables a user to define the grid parameters
+and apply a deformable map to that grid.</p>
+<p>ANTsR function: <cite>createWarpedGrid</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image</li>
+<li><strong>grid_step</strong> (<em>scalar</em>) &#8211; width of grid blocks</li>
+<li><strong>grid_width</strong> (<em>scalar</em>) &#8211; width of grid lines</li>
+<li><strong>grid_directions</strong> (<em>tuple of booleans</em>) &#8211; directions in which to draw grid lines, boolean vector</li>
+<li><strong>fixed_reference_image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; reference image space</li>
+<li><strong>transform</strong> (<em>list/tuple of strings</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; vector of transforms</li>
+<li><strong>foreground</strong> (<em>scalar</em>) &#8211; intensity value for grid blocks</li>
+<li><strong>background</strong> (<em>scalar</em>) &#8211; intensity value for grid lines</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span> <span class="s1">&#39;r16&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span> <span class="s1">&#39;r64&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mygr</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">create_warped_grid</span><span class="p">(</span> <span class="n">mi</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mytx</span> <span class="o">&lt;-</span> <span class="n">ants</span><span class="o">.</span><span class="n">registration</span><span class="p">(</span><span class="n">fixed</span><span class="o">=</span><span class="n">fi</span><span class="p">,</span> <span class="n">moving</span><span class="o">=</span><span class="n">mi</span><span class="p">,</span> <span class="n">type_of_transform</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;SyN&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mywarpedgrid</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">create_warped_grid</span><span class="p">(</span> <span class="n">mi</span><span class="p">,</span> <span class="n">grid_directions</span><span class="o">=</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">),</span>
+<span class="go">                        transform=mytx[&#39;fwdtransforms&#39;], fixed_reference_image=fi )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.fsl2antstransform">
+<code class="descclassname">ants.</code><code class="descname">fsl2antstransform</code><span class="sig-paren">(</span><em>matrix</em>, <em>reference</em>, <em>moving</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/fsl2antstransform.html#fsl2antstransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.fsl2antstransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an FSL linear transform to an antsrTransform</p>
+<p>ANTsR function: <cite>fsl2antsrtransform</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>matrix</strong> (<em>ndarray/list</em>) &#8211; 4x4 matrix of transform parameters</li>
+<li><strong>reference</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; target image</li>
+<li><strong>moving</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; moving image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_transform.ANTsTransform" title="ants.core.ants_transform.ANTsTransform">ANTsTransform</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fslmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">fslmat</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;ch2&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">fsl2antstransform</span><span class="p">(</span><span class="n">fslmat</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.image_mutual_information">
+<code class="descclassname">ants.</code><code class="descname">image_mutual_information</code><span class="sig-paren">(</span><em>img1</em>, <em>img2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/metrics.html#image_mutual_information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.image_mutual_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute mutual information between two ANTsImage types</p>
+<p>ANTsR function: <cite>antsImageMutualInformation</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img1</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image 1</li>
+<li><strong>img2</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r64&#39;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mival</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_mutual_information</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">mi</span><span class="p">)</span> <span class="c1"># -0.1796141</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.reflect_image">
+<code class="descclassname">ants.</code><code class="descname">reflect_image</code><span class="sig-paren">(</span><em>img</em>, <em>axis=None</em>, <em>tx=None</em>, <em>metric='mattes'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/reflect_image.html#reflect_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.reflect_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reflect an image along an axis</p>
+<p>ANTsR function: <cite>reflectImage</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image to reflect</li>
+<li><strong>axis</strong> (<em>integer</em><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; which dimension to reflect across, numbered from 0 to imageDimension-1</li>
+<li><strong>tx</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a><em> (</em><em>optional</em><em>)</em><em></em>) &#8211; transformation type to estimate after reflection</li>
+<li><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; similarity metric for image registration. see antsRegistration.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">),</span> <span class="s1">&#39;float&#39;</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asym</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">reflect_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="s1">&#39;Affine&#39;</span><span class="p">)[</span><span class="s1">&#39;warpedmovout&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asym</span> <span class="o">=</span> <span class="n">asym</span> <span class="o">-</span> <span class="n">fi</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.reorient_image">
+<code class="descclassname">ants.</code><code class="descname">reorient_image</code><span class="sig-paren">(</span><em>img</em>, <em>axis1</em>, <em>axis2=None</em>, <em>doreflection=False</em>, <em>doscale=0</em>, <em>txfn=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/reorient_image.html#reorient_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.reorient_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align image along a specified axis</p>
+<p>ANTsR function: <cite>reorientImage</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image to reorient</li>
+<li><strong>axis1</strong> (<em>list/tuple of python:integers</em>) &#8211; vector of size dim, might need to play w/axis sign</li>
+<li><strong>axis2</strong> (<em>list/tuple of python:integers</em>) &#8211; vector of size dim for 3D</li>
+<li><strong>doreflection</strong> (<em>boolean</em>) &#8211; whether to reflect</li>
+<li><strong>doscale</strong> (<em>scalar value</em>) &#8211; 1 allows automated estimate of scaling</li>
+<li><strong>txfn</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; file name for transformation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ants</span><span class="o">.</span><span class="n">reorient_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.get_center_of_mass">
+<code class="descclassname">ants.</code><code class="descname">get_center_of_mass</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/reorient_image.html#get_center_of_mass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.get_center_of_mass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute an image center of mass in physical space which is defined
+as the mean of the intensity weighted voxel coordinate system.</p>
+<p>ANTsR function: <cite>getCenterOfMass</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image from which center of mass will be computed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">scalar</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s2">&quot;r16&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">com1</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_center_of_mass</span><span class="p">(</span> <span class="n">fi</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s2">&quot;r64&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">com2</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_center_of_mass</span><span class="p">(</span> <span class="n">fi</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.resample_image">
+<code class="descclassname">ants.</code><code class="descname">resample_image</code><span class="sig-paren">(</span><em>img</em>, <em>resample_params</em>, <em>use_voxels=False</em>, <em>interp_type=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/resample_image.html#resample_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.resample_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resample image by spacing or number of voxels with
+various interpolators. Works with multi-channel images.</p>
+<p>ANTsR function: <cite>resampleImage</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; input image</li>
+<li><strong>resample_params</strong> (<em>tuple/list</em>) &#8211; vector of size dimension with numeric values</li>
+<li><strong>use_voxels</strong> (<em>boolean</em>) &#8211; True means interpret resample params as voxel counts</li>
+<li><strong>interp_type</strong> (<em>integer</em>) &#8211; one of 0 (linear), 1 (nearest neighbor), 2 (gaussian), 3 (windowed sinc), 4 (bspline)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s2">&quot;r16&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">finn</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,(</span><span class="mi">50</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span><span class="kc">True</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filin</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">),</span><span class="kc">False</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.resample_image_to_target">
+<code class="descclassname">ants.</code><code class="descname">resample_image_to_target</code><span class="sig-paren">(</span><em>image</em>, <em>target</em>, <em>interp_type='linear'</em>, <em>imagetype=0</em>, <em>verbose=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/resample_image.html#resample_image_to_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.resample_image_to_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resample image by using another image as target reference.
+This function uses ants.apply_transform with an identity matrix
+to achieve proper resampling.</p>
+<p>ANTsR function: <cite>resampleImageToTarget</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image to resample</li>
+<li><strong>target</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image of reference, the output will be in this space</li>
+<li><strong>interp_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; <dl class="docutils">
+<dt>Choice of interpolator. Supports partial matching.</dt>
+<dd>linear
+nearestNeighbor
+multiLabel for label images but genericlabel is preferred
+gaussian
+bSpline
+cosineWindowedSinc
+welchWindowedSinc
+hammingWindowedSinc
+lanczosWindowedSinc
+genericLabel use this for label images</dd>
+</dl>
+</li>
+<li><strong>imagetype</strong> (<em>integer</em>) &#8211; choose 0/1/2/3 mapping to scalar/vector/tensor/time-series</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; print command and run verbose application of transform.</li>
+<li><strong>kwargs</strong> (<em>keyword arguments</em>) &#8211; additional arugment passed to antsApplyTransforms C code</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span><span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fi2mm</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">use_voxels</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">interp_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resampled</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">resample_image_to_target</span><span class="p">(</span><span class="n">fi2mm</span><span class="p">,</span> <span class="n">fi</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ants.symimg">
+<code class="descclassname">ants.</code><code class="descname">symimg</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ants/registration/symimg.html#symimg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ants.symimg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use registration and reflection to make an image symmetric</p>
+<p>ANTsR function: N/A</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage"><em>ANTsImage</em></a>) &#8211; image to make symmetric</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="core.html#ants.core.ants_image.ANTsImage" title="ants.core.ants_image.ANTsImage">ANTsImage</a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">image_read</span><span class="p">(</span> <span class="n">ants</span><span class="o">.</span><span class="n">get_ants_data</span><span class="p">(</span><span class="s1">&#39;r16&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simg</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">symimg</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="segmentation.html" class="btn btn-neutral float-right" title="Segmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core.html" class="btn btn-neutral" title="Core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, ANTs Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
