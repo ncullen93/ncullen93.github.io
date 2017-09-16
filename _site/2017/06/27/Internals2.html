@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PyTorch Internals Part II - The Build System</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600,700">
+    <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body id="/2017/06/27/Internals2">
+
+    <header>
+
+    
+    <div class="container">
+    
+
+    <div class="logo"><a href="/"></a></div>
+    <a class="btn" href="/docs/">ANTsPy Docs</a>
+    <a class="btn" href="https://www.rdocumentation.org/packages/ANTsR/versions/1.0">ANTsR Docs</a>
+    <a class="btn" href="http://stnava.github.io/ANTs/">ANTs Docs</a>
+
+    <ul class="primary-nav">
+    <li><a  href="/">Get Started</a></li>
+    <li><a  href="/about/">About</a></li>
+    <li><a  href="/support/">Tutorials</a></li>
+    <li><a  href="https://discuss.pytorch.org">Discuss</a></li>
+
+</ul>
+
+
+    
+    </div>
+    
+    
+</header>
+
+    <section class="content wrap">
+	<div class="container">
+
+	    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+	      <section class="post-header">
+		<h1 class="post-title" itemprop="name headline">PyTorch Internals Part II - The Build System</h1>
+		<p class="post-meta">
+		  <time datetime="2017-06-27T10:00:00-07:00" itemprop="datePublished">
+		    
+		    Jun 27, 2017
+		  </time>
+		  
+		    • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Trevor Killeen</span></span>
+		  </p>
+	      </section>
+
+	      <div class="post-content" itemprop="articleBody">
+		<p>In the first <a href="/2017/05/11/Internals.html">post</a> I explained how we generate a <code class="highlighter-rouge">torch.Tensor</code> object that you can use in your Python interpreter. Next, I will explore the build system for PyTorch. The PyTorch codebase has a variety of components:</p>
+
+<ul>
+  <li>The core Torch libraries: TH, THC, THNN, THCUNN</li>
+  <li>Vendor libraries: CuDNN, NCCL</li>
+  <li>Python Extension libraries</li>
+  <li>Additional third-party libraries: NumPy, MKL, LAPACK</li>
+</ul>
+
+<p>How does a simple invocation of <code class="highlighter-rouge">python setup.py install</code> do the work that allows you to call <code class="highlighter-rouge">import torch</code> and use the PyTorch library in your code?</p>
+
+<p>The first part of this document will explain the build process from and end-user point of view. This will explain how we take the components above to build the library. The second part of the document will be important for PyTorch developers. It will document ways to improve your iteration speed by building only a subset of the code that you are working on.</p>
+
+<h3 id="setuptools-and-pytorchs-setup--function">Setuptools and PyTorch’s setup( ) function</h3>
+<hr />
+
+<p>Python uses <a href="https://setuptools.readthedocs.io/en/latest/index.html">Setuptools</a> to build the library. Setuptools is an extension to the original distutils system from the core Python library. The core component of Setuptools is the <code class="highlighter-rouge">setup.py</code> file which contains all the information needed to build the project. The most important function is the <code class="highlighter-rouge">setup()</code> function which serves as the main entry point. Let’s take a look at the one in PyTorch:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>setup(name="torch", version=version,
+      description="Tensors and Dynamic neural networks in Python with strong GPU acceleration",
+      ext_modules=extensions,
+      cmdclass={
+          'build': build,
+          'build_py': build_py,
+          'build_ext': build_ext,
+          'build_deps': build_deps,
+          'build_module': build_module,
+          'develop': develop,
+          'install': install,
+          'clean': clean,
+      },
+      packages=packages,
+      package_data={'torch': [
+          'lib/*.so*', 'lib/*.dylib*',
+          'lib/torch_shm_manager',
+          'lib/*.h',
+          'lib/include/TH/*.h', 'lib/include/TH/generic/*.h',
+          'lib/include/THC/*.h', 'lib/include/THC/generic/*.h']},
+      install_requires=['pyyaml'],
+      )
+</code></pre>
+</div>
+<p>The function is composed entirely of keyword arguments, which serve two purposes:</p>
+
+<ul>
+  <li>Metadata (e.g. name, description, version)</li>
+  <li>The contents of the package</li>
+</ul>
+
+<p>We are concerned with #2. Let’s break down the individual components:</p>
+
+<ul>
+  <li><strong>ext_modules</strong>: Python modules are either “pure” modules, containing only Python code, or “extension” modules written in the low-level language of the Python implementation. Here we are listing the extension modules in the build, including the main <code class="highlighter-rouge">torch._C</code> library that contains our Python Tensor</li>
+  <li><strong>cmdclass</strong>: When using the <code class="highlighter-rouge">setup.py</code> script from the command line, the user must specify one or more “commands”, code snippets that perform a specific action. For example, the “install” command builds and installs the package. This mapping routes specific commands to functions in <code class="highlighter-rouge">setup.py</code> that implement them</li>
+  <li><strong>packages</strong>: The list of packages in the project. These are “pure” - i.e. they only contain Python code. These are defined elsewhere in <code class="highlighter-rouge">setup.py</code></li>
+  <li><strong>package_data</strong>: Additional files that need to be installed into a package: in this case the header files and shared libraries that the build will generate must be included in our installation</li>
+  <li><strong>install_requires</strong>: In order to build PyTorch, we need pyyaml. Setuptools will handle making sure that pyyaml will be available, downloading and installing it if necessary</li>
+</ul>
+
+<p>We will consider these components in more detail, but for now it is instructive to look at the end product of an installation – i.e. what Setuptools does after building the code.</p>
+
+<h3 id="site_packages">site_packages</h3>
+<hr />
+
+<p>Third party packages are by default installed into the <code class="highlighter-rouge">lib/&lt;version&gt;/site_packages</code>  directory associated with your Python binary. For example, because I am using an <a href="https://conda.io/miniconda.html">Miniconda</a> environment, my Python binary is found at:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:pytorch (master)$ which python
+~/local/miniconda2/envs/p3/bin/python
+</code></pre>
+</div>
+<p>And thus packages are installed into:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages
+</code></pre>
+</div>
+<p>I installed PyTorch, and let’s take a look into torch folder in site-packages:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:site-packages$ cd torch
+(p3) killeent@devgpu047:torch$ ls
+autograd  backends  _C.cpython-36m-x86_64-linux-gnu.so  cuda  distributed  _dl.cpython-36m-x86_64-linux-gnu.so  functional.py  __init__.py  legacy  lib  multiprocessing  nn  optim  __pycache__  serialization.py  _six.py  sparse  storage.py  _tensor_docs.py  tensor.py  _tensor_str.py  _thnn  _torch_docs.py  utils  _utils.py  version.py
+</code></pre>
+</div>
+<p>Note that everything we would expect to be here is here:</p>
+
+<ul>
+  <li>All the “pure” packages are here [todo print packages from setup.py to explain]</li>
+  <li>The extension libaries are here - the ._C* and ._dl* shared libraries</li>
+  <li>The package_data is here: the contents of lib/ match exactly what we described in the setup function:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:torch$ ls lib/
+include     libnccl.so.1  libTHC.so.1   libTHCUNN.so.1  libTHNN.so.1  libTH.so.1   THCUNN.h  torch_shm_manager libnccl.so  libshm.so     libTHCS.so.1  libTHD.so.1     libTHPP.so.1  libTHS.so.1  THNN.h
+</code></pre>
+</div>
+
+<p>The Python interpreter looks into <code class="highlighter-rouge">site_packages</code> during an import. If we call <code class="highlighter-rouge">import torch</code> in our Python code it will find the module here and initialize and import it. You can read more about the import system <a href="https://docs.python.org/3/tutorial/modules.html">here</a>.</p>
+
+<h3 id="building-individual-parts">Building Individual Parts</h3>
+<hr />
+
+<p>Next, we will look at the various individual components of the build from start to finish. This will illustrate how we combine all the code we mentioned in the introduction.</p>
+
+<h3 id="backend-torch-and-vendor-libraries">Backend Torch and Vendor Libraries</h3>
+<hr />
+
+<p>Let’s take a look at the <code class="highlighter-rouge">install</code> cmd override in PyTorch’s <code class="highlighter-rouge">setup.py</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class install(setuptools.command.install.install):
+
+    def run(self):
+        if not self.skip_build:
+            self.run_command('build_deps')
+        setuptools.command.install.install.run(self)
+</code></pre>
+</div>
+
+<p>We note the first thing it does is run a command called “build_deps” - let’s take a look at it’s <code class="highlighter-rouge">run()</code> method:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def run(self):
+        from tools.nnwrap import generate_wrappers as generate_nn_wrappers
+        build_all_cmd = ['bash', 'torch/lib/build_all.sh']
+        if WITH_CUDA:
+            build_all_cmd += ['--with-cuda']
+        if WITH_NCCL and not SYSTEM_NCCL:
+            build_all_cmd += ['--with-nccl']
+        if WITH_DISTRIBUTED:
+            build_all_cmd += ['--with-distributed']
+        if subprocess.call(build_all_cmd) != 0:
+            sys.exit(1)
+        generate_nn_wrappers()
+</code></pre>
+</div>
+
+<p>Here we note that that we have a shell script <code class="highlighter-rouge">build_all.sh</code> in the <code class="highlighter-rouge">torch/lib/</code> directory. This script is configurable by whether we are on a system with CUDA enabled, the NCCL library enabled, and PyTorch’s distributed library enabled.</p>
+
+<p>Let’s take a look in <code class="highlighter-rouge">torch/lib</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:lib (master)$ ls
+build_all.sh  libshm  nccl  README.md  TH  THC  THCS  THCUNN  THD  THNN  THPP  THS
+</code></pre>
+</div>
+
+<p>Here we see the directories for all the backend libraries. <code class="highlighter-rouge">TH</code>, <code class="highlighter-rouge">THC</code>, <code class="highlighter-rouge">THNN</code>,  <code class="highlighter-rouge">THCUNN</code>, and <code class="highlighter-rouge">nccl</code> are git subtrees (see e.g. https://developer.atlassian.com/blog/2015/05/the-power-of-git-subtree/) that are in sync with the libraries in e.g. https://github.com/torch/torch7/tree/master/lib/TH. <code class="highlighter-rouge">THS</code>, <code class="highlighter-rouge">THCS</code>, <code class="highlighter-rouge">THD</code>, <code class="highlighter-rouge">THPP</code> and <code class="highlighter-rouge">libshm</code> are libraries specific to PyTorch. All of the libraries contain <code class="highlighter-rouge">CMakeLists.txt</code> - indicating they are built with CMake.</p>
+
+<p>The <code class="highlighter-rouge">build_all.sh</code> is essentially a script that runs the CMake configure step on all of these libraries, and then <code class="highlighter-rouge">make install</code>. Let’s run <code class="highlighter-rouge">./build_all.sh</code> and see what we are left with:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:lib (master)$ ./build_all.sh --with-cuda --with-nccl --with-distributed
+[various CMake output logs]
+(p3) killeent@devgpu047:lib (master)$ ls
+build  build_all.sh  include  libnccl.so  libnccl.so.1  libshm  libshm.so  libTHC.so.1  libTHCS.so.1  libTHCUNN.so.1  libTHD.so.1  libTHNN.so.1  libTHPP.so.1  libTH.so.1  libTHS.so.1  nccl  README.md  TH  THC  THCS  THCUNN  THCUNN.h  THD  THNN  THNN.h  THPP  THS  tmp_install  torch_shm_manager
+</code></pre>
+</div>
+
+<p>Now there are a number of extra things in the directory:</p>
+
+<ul>
+  <li>Shared library files for each library</li>
+  <li>Headers for <code class="highlighter-rouge">THNN</code> and <code class="highlighter-rouge">THCUNN</code></li>
+  <li><code class="highlighter-rouge">build</code> and <code class="highlighter-rouge">tmp_install</code> directories</li>
+  <li>The <code class="highlighter-rouge">torch_shm_manager</code> executable</li>
+</ul>
+
+<p>Let’s explore further. In the shell script, we create the <code class="highlighter-rouge">build</code> directory and a subdir for each library to build:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># We create a build directory for the library, which will
+# contain the cmake output. $1 is the library to be built
+  mkdir -p build/$1
+  cd build/$1
+</code></pre>
+</div>
+
+<p>Thus e.g. <code class="highlighter-rouge">build/TH</code> contains the CMake configuration output including the <code class="highlighter-rouge">Makefile</code> for building TH, and also the result of running make install in this directory.</p>
+
+<p>Let’s also look at <code class="highlighter-rouge">tmp_install</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:lib (master)$ ls tmp_install/
+bin  include  lib  share
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">tmp_install</code> looks like a standard install directory containing binaries, header files and library files. For example, <code class="highlighter-rouge">tmp_install/include/TH</code> contains all the <code class="highlighter-rouge">TH</code> headers, and <code class="highlighter-rouge">tmp_install/lib/</code> contains the <code class="highlighter-rouge">libTH.so.1</code> file.</p>
+
+<p>So why have this directory? It is used to compile the libraries that depend on each other. For example, the <code class="highlighter-rouge">THC</code> library depends on the <code class="highlighter-rouge">TH</code> library and its headers. This is referenced in the build shell script as arguments to the <code class="highlighter-rouge">cmake</code> command:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># install_dir is tmp_install
+cmake ...
+	-DTH_INCLUDE_PATH="$INSTALL_DIR/include" \
+	-DTH_LIB_PATH="$INSTALL_DIR/lib" \
+</code></pre>
+</div>
+
+<p>And indeed if we look at the <code class="highlighter-rouge">THC</code> library we built:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:lib (master)$ ldd libTHC.so.1
+	...
+	libTH.so.1 =&gt; /home/killeent/github/pytorch/torch/lib/tmp_install/lib/./libTH.so.1 (0x00007f84478b7000)
+</code></pre>
+</div>
+
+<p>The way the <code class="highlighter-rouge">build_all.sh</code> specifies the include and library paths is a little messy but this is representative of the overall idea. Finally, at the end of the script:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># If all the builds succeed we copy the libraries, headers,
+# binaries to torch/lib
+cp $INSTALL_DIR/lib/* .
+cp THNN/generic/THNN.h .
+cp THCUNN/generic/THCUNN.h .
+cp -r $INSTALL_DIR/include .
+cp $INSTALL_DIR/bin/* .
+</code></pre>
+</div>
+
+<p>As we can see, at the end, we copy everything to the top-level <code class="highlighter-rouge">torch/lib</code> directory - explaining the contents we saw above. We’ll see why we do this next:</p>
+
+<h3 id="nn-wrappers">NN Wrappers</h3>
+<hr />
+
+<p>Briefly, let’s touch on the last part of the <code class="highlighter-rouge">build_deps</code> command: <code class="highlighter-rouge">generate_nn_wrappers()</code>.  We bind into the backend libraries using PyTorch’s custom <code class="highlighter-rouge">cwrap</code> tooling, which we touched upon in a previous post. For binding <code class="highlighter-rouge">TH</code> and <code class="highlighter-rouge">THC</code> we manually write the YAML declarations for each function. However, due to the relative simplicity of the <code class="highlighter-rouge">THNN</code> and <code class="highlighter-rouge">THCUNN</code> libraries, we auto-generate both the cwrap declarations and the resulting C++ code.</p>
+
+<p>The reason we copy the <code class="highlighter-rouge">THNN.h</code> and <code class="highlighter-rouge">THCUNN.h</code> header files into <code class="highlighter-rouge">torch/lib</code> is that this is where the <code class="highlighter-rouge">generate_nn_wrappers()</code> code expects these files to be located. <code class="highlighter-rouge">generate_nn_wrappers()</code> does a few things:</p>
+
+<ol>
+  <li>Parses the header files, generating cwrap YAML declarations and writing them to output <code class="highlighter-rouge">.cwrap</code> files</li>
+  <li>Calls <code class="highlighter-rouge">cwrap</code> with the appropriate plugins on these <code class="highlighter-rouge">.cwrap</code> files to generate source code for each</li>
+  <li>Parses the headers <em>a second time</em> to generate <code class="highlighter-rouge">THNN_generic.h</code> - a library that takes <code class="highlighter-rouge">THPP</code> Tensors, PyTorch’s “generic” C++ Tensor Library, and calls into the appropriate <code class="highlighter-rouge">THNN</code>/<code class="highlighter-rouge">THCUNN</code> library function based on the dynamic type of the Tensor</li>
+</ol>
+
+<p>If we take a look into <code class="highlighter-rouge">torch/csrc/nn</code> after running <code class="highlighter-rouge">generate_nn_wrappers()</code> we can see the output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:nn (master)$ ls
+THCUNN.cpp  THCUNN.cwrap  THNN.cpp  THNN.cwrap  THNN_generic.cpp  THNN_generic.cwrap  THNN_generic.h  THNN_generic.inc.h
+</code></pre>
+</div>
+
+<p>For example, the code generates cwrap like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[
+  name: FloatBatchNormalization_updateOutput
+  return: void
+  cname: THNN_FloatBatchNormalization_updateOutput
+  arguments:
+    - void* state
+    - THFloatTensor* input
+    - THFloatTensor* output
+    - type: THFloatTensor*
+      name: weight
+      nullable: True
+    - type: THFloatTensor*
+      name: bias
+      nullable: True
+    - THFloatTensor* running_mean
+    - THFloatTensor* running_var
+    - THFloatTensor* save_mean
+    - THFloatTensor* save_std
+    - bool train
+    - double momentum
+    - double eps
+]]
+</code></pre>
+</div>
+
+<p>with corresponding <code class="highlighter-rouge">.cpp</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>extern "C" void THNN_FloatBatchNormalization_updateOutput(void*, THFloatTensor*, THFloatTensor*, THFloatTensor*, THFloatTensor*, THFloatTensor*, THFloatTensor*, THFloatTensor*, THFloatTensor*, bool, double, double);
+
+PyObject * FloatBatchNormalization_updateOutput(PyObject *_unused, PyObject *args) {
+	// argument checking, unpacking
+	 PyThreadState *_save = NULL;
+      try {
+        Py_UNBLOCK_THREADS;
+        THNN_FloatBatchNormalization_updateOutput(arg_state, arg_input, arg_output, arg_weight, arg_bias, arg_running_mean, arg_running_var, arg_save_mean, arg_save_std, arg_train, arg_momentum, arg_eps);
+        Py_BLOCK_THREADS;
+        Py_RETURN_NONE;
+      } catch (...) {
+        if (_save) {
+          Py_BLOCK_THREADS;
+        }
+        throw;
+      }
+    
+    ...
+}
+</code></pre>
+</div>
+
+<p>In the <code class="highlighter-rouge">THPP</code> generated code, the function looks like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void BatchNormalization_updateOutput(thpp::Tensor* input, thpp::Tensor* output, thpp::Tensor* weight, thpp::Tensor* bias, thpp::Tensor* running_mean, thpp::Tensor* running_var, thpp::Tensor* save_mean, thpp::Tensor* save_std, bool train, double momentum, double eps) {
+	// Call appropriate THNN function based on tensor type, whether its on CUDA, etc.
+}
+</code></pre>
+</div>
+
+<p>We will look a little more at how these source files are used later.</p>
+
+<h3 id="building-the-pure-python-modules">“Building” the Pure Python Modules</h3>
+<hr />
+
+<p>Now that we have built the backend libraries (the “dependencies”) we can move forward with building the actual PyTorch code. The next Setuptools command that runs is <code class="highlighter-rouge">build_py</code>, which is used to build all the “Pure” python modules in our library. These are the “packages” passed to <code class="highlighter-rouge">setup.py</code>.</p>
+
+<p>The packages are found using the Setuptools’ utility function <code class="highlighter-rouge">find_packages()</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>packages = find_packages(exclude=('tools.*',))
+['torch', 'torch._thnn', 'torch.autograd', 'torch.backends', 'torch.cuda', 'torch.distributed', 'torch.legacy', 'torch.multiprocessing', 'torch.nn', 'torch.optim', 'torch.sparse', 'torch.utils', 'torch.autograd._functions', 'torch.backends.cudnn', 'torch.legacy.nn', 'torch.legacy.optim', 'torch.nn._functions', 'torch.nn.backends', 'torch.nn.modules', 'torch.nn.parallel', 'torch.nn.utils', 'torch.nn._functions.thnn', 'torch.utils.data', 'torch.utils.ffi', 'torch.utils.serialization', 'torch.utils.trainer', 'torch.utils.backcompat', 'torch.utils.trainer.plugins']
+</code></pre>
+</div>
+
+<p>As we can see, <code class="highlighter-rouge">find_package</code> has recursively traversed the <code class="highlighter-rouge">torch</code> directory, finding all the directory paths that have an <code class="highlighter-rouge">__init__.py</code> file.</p>
+
+<p>When building with Setuptools, the tool creates a <code class="highlighter-rouge">build</code> directory in the distribution root, i.e. the same location as the <code class="highlighter-rouge">setup.py</code> file. Because PyTorch is composed of both “Pure” python modules and Extension Modules, we need to preserve information about the Operating System and Python version used when performing the build. So if we look in my <code class="highlighter-rouge">build</code> directory, we see:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:pytorch (master)$ ls build
+lib.linux-x86_64-3.6  temp.linux-x86_64-3.6
+</code></pre>
+</div>
+
+<p>This indicates that I’ve built the project on <code class="highlighter-rouge">linux-x86-64</code> using Python 3.6. The lib directory contains the library files, while the temp directory contains files generated during the build that aren’t needed in the final installation.</p>
+
+<p>Because “Pure” python modules are just Python code, and don’t need to be “compiled”, the <code class="highlighter-rouge">build_py</code> process simply copies files from their locations as found by <code class="highlighter-rouge">find_packages</code> to the equivalent location in <code class="highlighter-rouge">build/</code>. So our build output is littered with lines like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>copying torch/autograd/_functions/blas.py -&gt; build/lib.linux-x86_64-3.6/torch/autograd/_functions
+</code></pre>
+</div>
+
+<p>We also noted earlier that we could pass files and directories to the <code class="highlighter-rouge">package_data</code> keyword argument to the main <code class="highlighter-rouge">setup()</code> function, and that Setuptools would handle copying those files to the installation location. During <code class="highlighter-rouge">build_py</code>, these files are copied to the <code class="highlighter-rouge">build/</code> directory, so we also see lines like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>copying torch/lib/libTH.so.1 -&gt; build/lib.linux-x86_64-3.6/torch/lib
+...
+copying torch/lib/include/THC/generic/THCTensor.h -&gt; build/lib.linux-x86_64-3.6/torch/lib/include/THC/generic
+</code></pre>
+</div>
+
+<h3 id="building-the-extension-modules">Building the Extension Modules</h3>
+<hr />
+
+<p>Finally, we need to build the Extension Modules, i.e. the PyTorch modules written in C++ using the CPython backend. This also constitutes the majority of the code logic in <code class="highlighter-rouge">setup.py</code>. Our overridden <code class="highlighter-rouge">build_ext</code> Command has some special logic before the extensions themselves are actually built:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from tools.cwrap import cwrap
+from tools.cwrap.plugins.THPPlugin import THPPlugin
+from tools.cwrap.plugins.ArgcountSortPlugin import ArgcountSortPlugin
+from tools.cwrap.plugins.AutoGPU import AutoGPU
+from tools.cwrap.plugins.BoolOption import BoolOption
+from tools.cwrap.plugins.KwargsPlugin import KwargsPlugin
+from tools.cwrap.plugins.NullableArguments import NullableArguments
+from tools.cwrap.plugins.CuDNNPlugin import CuDNNPlugin
+from tools.cwrap.plugins.WrapDim import WrapDim
+from tools.cwrap.plugins.AssertNDim import AssertNDim
+from tools.cwrap.plugins.Broadcast import Broadcast
+from tools.cwrap.plugins.ProcessorSpecificPlugin import ProcessorSpecificPlugin
+        thp_plugin = THPPlugin()
+        cwrap('torch/csrc/generic/TensorMethods.cwrap', plugins=[
+            ProcessorSpecificPlugin(), BoolOption(), thp_plugin,
+            AutoGPU(condition='IS_CUDA'), ArgcountSortPlugin(), KwargsPlugin(),
+            AssertNDim(), WrapDim(), Broadcast()
+        ])
+        cwrap('torch/csrc/cudnn/cuDNN.cwrap', plugins=[
+            CuDNNPlugin(), NullableArguments()
+        ])
+</code></pre>
+</div>
+
+<p>Recall above that I documented that we auto-generated C++ code for calling into the <code class="highlighter-rouge">THNN</code> etc. libraries. Here is where we bind <code class="highlighter-rouge">TH</code>, <code class="highlighter-rouge">THC</code> and <code class="highlighter-rouge">CuDNN</code>. We take the YAML declarations in <code class="highlighter-rouge">TensorMethods.cwrap</code>, and use them to generate output C++ source files that contain implementations that work within PyTorch’s C++ Ecosytem. For example, a simple declaration like zero_:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[
+  name: zero_
+  cname: zero
+  return: self
+  arguments:
+    - THTensor* self
+]]
+</code></pre>
+</div>
+
+<p>Generates code like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> PyObject * THPTensor_(zero_)(PyObject *self, PyObject *args, PyObject *kwargs) {
+	...
+	THTensor_(zero)(LIBRARY_STATE arg_self);
+	...
+}
+</code></pre>
+</div>
+
+<p>In the previous post we documented how these functions are tied to specific Tensor types, so I won’t expand on that there. For the build process its enough to know that these C++ files are generated prior to the extension being built, because these source files are used during Extension compilation.</p>
+
+<h3 id="specifying-the-extensions">Specifying the Extensions</h3>
+<hr />
+
+<p>Unlike pure modules, it’s not enough just to list modules or packages and expect the Setuptools to go out and find the right files; you have to specify the extension name, source file(s), and any compile/link requirements (include directories, libraries to link with, etc.).</p>
+
+<p>The bulk (200~ LOC at the time of this writing) of the <code class="highlighter-rouge">setup.py</code> goes into specifying how to build these Extensions. Here, some of the choices we make in <code class="highlighter-rouge">build_all.sh</code> begin to make sense. For example, we saw that our build script specified a <code class="highlighter-rouge">tmp_install</code> directory where we installed our backend libraries. In our <code class="highlighter-rouge">setup.py</code> code, we reference this directory when adding to the list of directories containing header files to include:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># tmp_install_path is torch/lib/tmp_install
+include_dirs += [
+    cwd,
+    os.path.join(cwd, "torch", "csrc"),
+    tmp_install_path + "/include",
+    tmp_install_path + "/include/TH",
+    tmp_install_path + "/include/THPP",
+    tmp_install_path + "/include/THNN",
+</code></pre>
+</div>
+
+<p>Similarly, we copied the shared object libraries to <code class="highlighter-rouge">torch/csrc</code> at the end of the <code class="highlighter-rouge">build_all.sh</code> script. We reference these locations directly in our <code class="highlighter-rouge">setup.py</code> code when identifying libraries that we may link against:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># lib_path is torch/lib
+TH_LIB = os.path.join(lib_path, 'libTH.so.1')
+THS_LIB = os.path.join(lib_path, 'libTHS.so.1')
+THC_LIB = os.path.join(lib_path, 'libTHC.so.1')
+THCS_LIB = os.path.join(lib_path, 'libTHCS.so.1')
+THNN_LIB = os.path.join(lib_path, 'libTHNN.so.1')
+# ...
+</code></pre>
+</div>
+
+<p>Let’s consider how we build the main <code class="highlighter-rouge">torch._C</code> Extension Module:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C = Extension("torch._C",
+              libraries=main_libraries,
+              sources=main_sources,
+              language='c++',
+              extra_compile_args=main_compile_args + extra_compile_args,
+              include_dirs=include_dirs,
+              library_dirs=library_dirs,
+              extra_link_args=extra_link_args + main_link_args + [make_relative_rpath('lib')],
+              )
+</code></pre>
+</div>
+
+<ul>
+  <li>The main libraries are all the libraries we link against. This includes things like <code class="highlighter-rouge">shm</code>, PyTorch’s shared memory management library, and also system libraries like <code class="highlighter-rouge">cudart</code> and <code class="highlighter-rouge">cudnn</code>. Note that the <code class="highlighter-rouge">TH</code> libraries <em>are not</em> listed here</li>
+  <li>The main sources are the C++ files that make up the C++ backend for PyTorch</li>
+  <li>The compile args are various flags that configure compilation. For example, we might want to add debug flags when compiling in debug mode</li>
+  <li>The include dirs are the paths to all the directories containing header files. This is also another example where the <code class="highlighter-rouge">build_all.sh</code> script is important - for example, we look for the <code class="highlighter-rouge">TH</code> header files in <code class="highlighter-rouge">torch/lib/tmp_install/include/TH</code> - which is the install location we specified with our CMake configuration</li>
+  <li>The library dirs are directories to search for shared libraries at link time. For example, we include <code class="highlighter-rouge">torch/lib</code> - the location we copied our <code class="highlighter-rouge">.so</code> files to at the end of <code class="highlighter-rouge">build_all.sh</code>, but also the paths to the CUDA and CuDNN directories</li>
+  <li>The link arguments are used when linking object files together to create the extension. In PyTorch, this includes more <em>normal</em> options like decided to link <code class="highlighter-rouge">libstdc++</code> statically. However, there is one key component: <strong>this is where we link the backend TH libraries</strong>. Note that we have lines like:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># The explicit paths to .so files we described above
+main_link_args = [TH_LIB, THS_LIB, THPP_LIB, THNN_LIB]
+</code></pre>
+</div>
+
+<p>You might be wondering why we do this as opposed to adding these libraries to the list we pass to the <code class="highlighter-rouge">main_libraries</code> keyword argument. After all, that is a list of libraries to link against. The issue is that Lua Torch installs often set the <code class="highlighter-rouge">LD_LIBRARY_PATH</code> variable, and thus we could mistakenly link against a <code class="highlighter-rouge">TH</code> library built for Lua Torch, instead of the library we have built locally. This would be problematic because the code could be out of date, and also there are various configuration options for Lua Torch’s <code class="highlighter-rouge">TH</code> that would not play nicely with PyTorch.</p>
+
+<p>As such, we manually specify the paths to the shared libraries we generated directly to the linker.</p>
+
+<p>There are other extensions needed to power PyTorch and they are built in a similar way. The Setuptools library invokes the C++ compiler and linker to build all of these extensions. If the builds succeed, we have successfully <em>built</em> the PyTorch library and we can move on to installation.</p>
+
+<h3 id="installation">Installation</h3>
+<hr />
+
+<p>After building has finished, installation is quite simple. We simply have to copy everything in our <code class="highlighter-rouge">build/lib.linux-x86_64-3.6</code> directory to the appropriate installation directory. Recall that we noted above that this directory is the <code class="highlighter-rouge">site_packages</code> directory associated with our Python binary. As a result, we see lines like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>running install_lib
+creating /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch
+copying build/lib.linux-x86_64-3.6/torch/_C.cpython-36m-x86_64-linux-gnu.so -&gt; /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch
+copying build/lib.linux-x86_64-3.6/torch/_dl.cpython-36m-x86_64-linux-gnu.so -&gt; /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch
+creating /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch/_thnn
+copying build/lib.linux-x86_64-3.6/torch/_thnn/_THNN.cpython-36m-x86_64-linux-gnu.so -&gt; /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch/_thnn
+copying build/lib.linux-x86_64-3.6/torch/_thnn/_THCUNN.cpython-36m-x86_64-linux-gnu.so -&gt; /home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch/_thnn
+</code></pre>
+</div>
+
+<p>Finally lets power up the Python interpreter. When the Python interpreter executes an import statement, it searches for Python code and extension modules along a search path. A default value for the path is configured into the Python binary when the interpreter is built.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># note we are now in my home directory
+(p3) killeent@devgpu047:~$ python
+Python 3.6.1 |Continuum Analytics, Inc.| (default, Mar 22 2017, 19:54:23)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+['', '/home/killeent/local/miniconda2/envs/p3/lib/python36.zip', '/home/killeent/local/miniconda2/envs/p3/lib/python3.6', '/home/killeent/local/miniconda2/envs/p3/lib/python3.6/lib-dynload', '/home/killeent/.local/lib/python3.6/site-packages', '/home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages', '/home/killeent/github/pytorch', '/home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/setuptools-27.2.0-py3.6.egg']
+</code></pre>
+</div>
+
+<p>As we can see, the <code class="highlighter-rouge">site-packages</code> directory we copied our PyTorch installation to is part of search path. Now let’s load the <code class="highlighter-rouge">torch</code> module and see its location:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; import torch
+&gt;&gt;&gt; import inspect
+&gt;&gt;&gt; inspect.getfile(torch)
+'/home/killeent/local/miniconda2/envs/p3/lib/python3.6/site-packages/torch/__init__.py'
+</code></pre>
+</div>
+
+<p>As we can see, we have loaded the module from <code class="highlighter-rouge">site_packages</code> as expected - and our build and installation is successful!</p>
+
+<p><strong>Note:</strong> Python prepends the empty string to <code class="highlighter-rouge">sys.path</code> to represent the current working directory - making it the first place we search for a module. So if we run Python from the pytorch directory, we would accidentally load the local version of PyTorch rather than our installed version. This is something to watch out for.</p>
+
+<h3 id="addendum---developer-efficiency-3rd-party-libraries-things-i-didnt-cover">Addendum - Developer Efficiency, 3rd Party Libraries, Things I Didn’t Cover</h3>
+<hr />
+
+<p>The entire installation loop for PyTorch can be quite time-consuming. On my devserver, it takes around 5 minutes for an installation from source. Often times, when developing PyTorch, we only want to work on a subset of the entire project, and re-build only that subset in order to test changes. Fortunately, our build system enables this.</p>
+
+<h3 id="setuptools-develop-mode">Setuptools Develop Mode</h3>
+<hr />
+
+<p>The main tool that supports this is Setuptools <code class="highlighter-rouge">develop</code> command. The documentation states that:</p>
+
+<p>“This command allows you to deploy your project’s source for use in one or more “staging areas” where it will be available for importing. This deployment is done in such a way that changes to the project source are immediately available in the staging area(s), without needing to run a build or install step after each change.”</p>
+
+<p>But how does it work? Suppose we run <code class="highlighter-rouge">python setup.py build develop</code> in the PyTorch directory. The <code class="highlighter-rouge">build</code> command is run, building our dependencies (<code class="highlighter-rouge">TH</code>, <code class="highlighter-rouge">THPP</code>, etc.) and the extension libraries. However, if we look inside <code class="highlighter-rouge">site-packages</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:site-packages$ ls -la torch*
+-rw-r--r--. 1 killeent users 31 Jun 27 08:02 torch.egg-link
+</code></pre>
+</div>
+
+<p>Looking at the contents of the <code class="highlighter-rouge">torch.egg-link</code> file, it simply references the PyTorch directory:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:site-packages$ cat torch.egg-link
+/home/killeent/github/pytorch
+</code></pre>
+</div>
+
+<p>If we navigate back to the PyTorch directory, we see there is a new directory <code class="highlighter-rouge">torch.egg-info</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:pytorch (master)$ ls -la torch.egg-info/
+total 28
+drwxr-xr-x.  2 killeent users  4096 Jun 27 08:09 .
+drwxr-xr-x. 10 killeent users  4096 Jun 27 08:01 ..
+-rw-r--r--.  1 killeent users     1 Jun 27 08:01 dependency_links.txt
+-rw-r--r--.  1 killeent users   255 Jun 27 08:01 PKG-INFO
+-rw-r--r--.  1 killeent users     7 Jun 27 08:01 requires.txt
+-rw-r--r--.  1 killeent users 16080 Jun 27 08:01 SOURCES.txt
+-rw-r--r--.  1 killeent users    12 Jun 27 08:01 top_level.txt
+</code></pre>
+</div>
+
+<p>This file contains metadata about the PyTorch project. For example, <code class="highlighter-rouge">requirements.txt</code> lists all of the dependencies for setting up PyTorch:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:pytorch (master)$ cat torch.egg-info/requires.txt
+pyyaml
+</code></pre>
+</div>
+
+<p>Without going into too much detail, <code class="highlighter-rouge">develop</code> allows us to essentially treat the PyTorch repo itself as if it were in <code class="highlighter-rouge">site-packages</code>, so we can import the module and it just works:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(p3) killeent@devgpu047:~$ python
+Python 3.6.1 |Continuum Analytics, Inc.| (default, Mar 22 2017, 19:54:23)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; torch.__file__
+'/home/killeent/github/pytorch/torch/__init__.py'
+</code></pre>
+</div>
+
+<p>As a result, the following consequences hold:</p>
+
+<ul>
+  <li>If we change a Python source file, the changes are automatically picked up, and we don’t have to run any commands to let the Python interpreter <em>see</em> this change</li>
+  <li>If we change a C++ Source File in one of the extension libraries, we can re-run the <code class="highlighter-rouge">develop</code> command, it will re-build the extension</li>
+</ul>
+
+<p>Thus we can develop the PyTorch codebases seamlessly, and test our changes in an easy way.</p>
+
+<h4 id="working-on-the-dependency-libraries">Working on the Dependency Libraries</h4>
+
+<p>If we are working on the dependencies (e.g. <code class="highlighter-rouge">TH</code>, <code class="highlighter-rouge">THPP</code>, etc.) we can re-build our changes more quickly by simply running the <code class="highlighter-rouge">build_deps</code> command directly. This will automatically call into <code class="highlighter-rouge">build_all.sh</code> to re-build our libraries, and copy the generated libraries appropriately. If we are using Setuptools <code class="highlighter-rouge">develop</code> mode, we will be using the local extension library built in the PyTorch directory. Because we have specified the paths to the shared libraries when compiling our Extension Libraries, the changes will be picked up:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># we are using the local extension
+(p3) killeent@devgpu047:~$ python
+Python 3.6.1 |Continuum Analytics, Inc.| (default, Mar 22 2017, 19:54:23)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; torch._C.__file__
+'/home/killeent/github/pytorch/torch/_C.cpython-36m-x86_64-linux-gnu.so'
+
+# it references the local shared object library we just re-built
+(p3) killeent@devgpu047:~$ ldd /home/killeent/github/pytorch/torch/_C.cpython-36m-x86_64-linux-gnu.so
+# ...
+libTH.so.1 =&gt; /home/killeent/github/pytorch/torch/lib/libTH.so.1 (0x00007f543d0e2000)
+# ...
+</code></pre>
+</div>
+
+<p>As such, we can test any changes here without having to do a full rebuild.</p>
+
+<h4 id="3rd-party-libraries">3rd Party Libraries</h4>
+
+<p>PyTorch has dependencies on some 3rd party libraries. The usual mechanism for using these libraries is to install them via Anaconda, and then link against them. For example, we can use the <code class="highlighter-rouge">mkl</code> library with PyTorch by doing:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># installed to miniconda2/envs/p3/lib/libmkl_intel_lp64.so
+conda install mkl
+</code></pre>
+</div>
+
+<p>And then as long as we have the path to this <code class="highlighter-rouge">lib</code> directory on our <code class="highlighter-rouge">$CMAKE_PREFIX_PATH</code>, it will successfully find this library when compiling:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># in the site-packages dir
+(p3) killeent@devgpu047:torch$ ldd _C.cpython-36m-x86_64-linux-gnu.so
+# ...
+libmkl_intel_lp64.so =&gt; /home/killeent/local/miniconda2/envs/p3/lib/libmkl_intel_lp64.so (0x00007f3450bba000)
+# ...
+</code></pre>
+</div>
+
+<h3 id="not-covered-but-also-relevant">Not Covered, But Also Relevant</h3>
+<hr />
+
+<ul>
+  <li>How <code class="highlighter-rouge">ccache</code> is used to speed up build times</li>
+  <li>How PyTorch’s top-level <code class="highlighter-rouge">__init__.py</code> file handles the initial module import and pulling together all the various modules and extension libraries</li>
+  <li>The CMake build system, how the backend libraries are configured and built with CMake</li>
+</ul>
+
+	      </div>
+
+	      
+	    </article>
+
+        </div>
+    </section>
+
+    <footer>
+
+    
+    <div class="container">
+    
+
+    <div class="left">
+        <div class="logo"><a href="/"></a></div>
+        <p>
+            Maintained by the ANTs core team. <br>
+            &copy;2017 ANTs
+        </p>
+    </div>
+    
+    <ul class="primary-nav">
+    <li><a  href="/">Get Started</a></li>
+    <li><a  href="/about/">About</a></li>
+    <li><a  href="/support/">Tutorials</a></li>
+    <li><a  href="https://discuss.pytorch.org">Discuss</a></li>
+
+</ul>
+
+
+    
+    </div>
+    
+
+</footer>
+
+
+</body>
+</html>

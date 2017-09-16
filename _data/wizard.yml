@@ -1,114 +1,39 @@
 ############ conda section #########################
 - 
-  matcher: 'conda,linux,cuda7.5,python2.7'
-  cmd: 'conda install pytorch torchvision -c soumith'
+  matcher: 'linux,ants'
+  cmd: 'git clone https://github.com/ANTsX/ANTs.git <br />
+        mkdir antsbin <br />
+        cd antsbin <br />
+        ccmake ../ANTs <br />
+        # go into cmake and type “c” and then “g”  then exit back to the terminal <br />
+        make -j 4'
 - 
-  matcher: 'conda,linux,cuda8.0,python2.7'
-  cmd: 'conda install pytorch torchvision cuda80 -c soumith'         
+  matcher: 'osx,ants'
+  cmd: 'git clone https://github.com/ANTsX/ANTs.git <br />
+        mkdir antsbin <br />
+        cd antsbin <br />
+        ccmake ../ANTs <br />
+        # go into cmake and type “c” and then “g”  then exit back to the terminal <br />
+        make -j 4'
 - 
-  matcher: 'conda,linux,cudanone,python2.7'
-  cmd: 'conda install pytorch torchvision -c soumith'
+  matcher: 'linux,antsr'
+  cmd: 'git clone https://github.com/stnava/ITKR.git <br /> 
+        git clone https://github.com/ANTsX/ANTsR.git <br />
+        R CMD INSTALL ITKR <br />
+        R CMD INSTALL ANTsR'
 - 
-  matcher: 'conda,linux,cuda7.5,python3.5'
-  cmd: 'conda install pytorch torchvision -c soumith'
+  matcher: 'osx,antsr'
+  cmd: 'git clone https://github.com/stnava/ITKR.git <br /> 
+        git clone https://github.com/ANTsX/ANTsR.git <br />
+        R CMD INSTALL ITKR <br />
+        R CMD INSTALL ANTsR'
 - 
-  matcher: 'conda,linux,cuda8.0,python3.5'
-  cmd: 'conda install pytorch torchvision cuda80 -c soumith'         
+  matcher: 'linux,antspy'
+  cmd: 'git clone https://github.com/ANTsX/ANTsPy.git <br />
+        cd ANTsPy <br />
+        python setup.py install'
 - 
-  matcher: 'conda,linux,cudanone,python3.5'
-  cmd: 'conda install pytorch torchvision -c soumith'
-- 
-  matcher: 'conda,linux,cuda7.5,python3.6'
-  cmd: 'conda install pytorch torchvision -c soumith'
-- 
-  matcher: 'conda,linux,cuda8.0,python3.6'
-  cmd: 'conda install pytorch torchvision cuda80 -c soumith'         
-- 
-  matcher: 'conda,linux,cudanone,python3.6'
-  cmd: 'conda install pytorch torchvision -c soumith'
-- 
-  matcher: 'conda,osx,cuda7.5,python2.7'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cuda8.0,python2.7'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cudanone,python2.7'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cuda7.5,python3.5'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cuda8.0,python3.5'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cudanone,python3.5'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cuda7.5,python3.6'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cuda8.0,python3.6'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'conda,osx,cudanone,python3.6'
-  cmd: 'conda install pytorch torchvision -c soumith <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-
-############ pip section #########################
-######### OSX ######################
-- 
-  matcher: 'pip,osx,cuda7.5,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cuda8.0,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cudanone,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cuda7.5,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp35-cp35m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cuda8.0,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp35-cp35m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cudanone,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp35-cp35m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cuda7.5,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp36-cp36m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cuda8.0,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp36-cp36m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-- 
-  matcher: 'pip,osx,cudanone,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp36-cp36m-macosx_10_7_x86_64.whl <br/> pip install torchvision <br /> # OSX Binaries dont support CUDA, install from source if CUDA is needed'
-######### Linux ######################
-- 
-  matcher: 'pip,linux,cuda7.5,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl <br/> pip install torchvision <br/><br/> # if the above command does not work, then you have python 2.7 UCS2, use this command <br/> pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27m-manylinux1_x86_64.whl'
-- 
-  matcher: 'pip,linux,cudanone,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl <br/> pip install torchvision <br/><br/> # if the above command does not work, then you have python 2.7 UCS2, use this command <br/> pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27m-manylinux1_x86_64.whl'
-- 
-  matcher: 'pip,linux,cuda8.0,python2.7'
-  cmd: 'pip install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl <br/> pip install torchvision <br/><br/> # if the above command does not\
- work, then you have python 2.7 UCS2, use this command <br/> pip install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp27-cp27m-manylinux1_x86_64.whl'
-- 
-  matcher: 'pip,linux,cuda7.5,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp35-cp35m-manylinux1_x86_64.whl <br/> pip install torchvision'
-- 
-  matcher: 'pip,linux,cudanone,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp35-cp35m-manylinux1_x86_64.whl <br/> pip install torchvision'
-- 
-  matcher: 'pip,linux,cuda8.0,python3.5'
-  cmd: 'pip install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp35-cp35m-manylinux1_x86_64.whl <br/> pip install torchvision'
-- 
-  matcher: 'pip,linux,cuda7.5,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl <br/> pip install torchvision'
-- 
-  matcher: 'pip,linux,cudanone,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl <br/> pip install torchvision'
-- 
-  matcher: 'pip,linux,cuda8.0,python3.6'
-  cmd: 'pip install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl <br/> pip install torchvision'
+  matcher: 'osx,antspy'
+  cmd: 'git clone https://github.com/ANTsX/ANTsPy.git <br />
+        cd ANTsPy <br />
+        python setup.py install'

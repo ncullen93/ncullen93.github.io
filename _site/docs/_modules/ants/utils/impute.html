@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ants.utils.impute &mdash; ANTsPy master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/ants_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="ANTsPy master documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/antspy-logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master (0.1.3)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#images">Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antsimage">ANTsImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antsimage-io">ANTsImage IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#transforms">Transforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antstransform">ANTsTransform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antstransform-io">ANTsTransform IO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core.html#metrics">Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antsmetric">ANTsMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core.html#antsmetric-io">ANTsMetric IO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../registration.html">Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../segmentation.html">Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Statistical Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vis.html">Visualization</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ANTsPy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ants.utils.impute</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ants.utils.impute</h1><div class="highlight"><pre>
+<span></span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;impute&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">fancyimpute</span> <span class="k">import</span> <span class="n">BiScaler</span><span class="p">,</span> <span class="n">KNN</span><span class="p">,</span> <span class="n">NuclearNormMinimization</span><span class="p">,</span> <span class="n">SoftImpute</span><span class="p">,</span> <span class="n">IterativeSVD</span>
+    <span class="n">has_fancyimpute</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">has_fancyimpute</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="impute"><a class="viewcode-back" href="../../../utils.html#ants.impute">[docs]</a><span class="k">def</span> <span class="nf">impute</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nan_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Impute missing values on a numpy ndarray in a column-wise manner.</span>
+<span class="sd">    </span>
+<span class="sd">    ANTsR function: `antsrimpute`</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    data : numpy.ndarray</span>
+<span class="sd">        data to impute</span>
+
+<span class="sd">    method : string or float</span>
+<span class="sd">        type of imputation method to use</span>
+<span class="sd">        Options:</span>
+<span class="sd">            mean</span>
+<span class="sd">            median</span>
+<span class="sd">            constant</span>
+<span class="sd">            KNN</span>
+<span class="sd">            BiScaler</span>
+<span class="sd">            NuclearNormMinimization</span>
+<span class="sd">            SoftImpute</span>
+<span class="sd">            IterativeSVD</span>
+
+<span class="sd">    value : scalar (optional)</span>
+<span class="sd">        optional arguments for different methods</span>
+<span class="sd">        if method == &#39;constant&#39;</span>
+<span class="sd">            constant value</span>
+<span class="sd">        if method == &#39;KNN&#39;</span>
+<span class="sd">            number of nearest neighbors to use</span>
+
+<span class="sd">    nan_value : scalar</span>
+<span class="sd">        value which is interpreted as a missing value</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray if ndarray was given</span>
+<span class="sd">    OR</span>
+<span class="sd">    pd.DataFrame if pd.DataFrame was given</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; import ants</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; data = np.random.randn(4,10)</span>
+<span class="sd">    &gt;&gt;&gt; data[2,3] = np.nan</span>
+<span class="sd">    &gt;&gt;&gt; data[3,5] = np.nan</span>
+<span class="sd">    &gt;&gt;&gt; data_imputed = ants.impute(data, &#39;mean&#39;)</span>
+
+<span class="sd">    Details</span>
+<span class="sd">    -------</span>
+<span class="sd">    KNN: Nearest neighbor imputations which weights samples using the mean squared </span>
+<span class="sd">            difference on features for which two rows both have observed data.</span>
+
+<span class="sd">    SoftImpute: Matrix completion by iterative soft thresholding of SVD </span>
+<span class="sd">                decompositions. Inspired by the softImpute package for R, which </span>
+<span class="sd">                is based on Spectral Regularization Algorithms for Learning </span>
+<span class="sd">                Large Incomplete Matrices by Mazumder et. al.</span>
+
+<span class="sd">    IterativeSVD: Matrix completion by iterative low-rank SVD decomposition.</span>
+<span class="sd">                    Should be similar to SVDimpute from Missing value estimation </span>
+<span class="sd">                    methods for DNA microarrays by Troyanskaya et. al.</span>
+
+<span class="sd">    MICE: Reimplementation of Multiple Imputation by Chained Equations.</span>
+
+<span class="sd">    MatrixFactorization: Direct factorization of the incomplete matrix into </span>
+<span class="sd">                        low-rank U and V, with an L1 sparsity penalty on the elements </span>
+<span class="sd">                        of U and an L2 penalty on the elements of V. </span>
+<span class="sd">                        Solved by gradient descent.</span>
+
+<span class="sd">    NuclearNormMinimization: Simple implementation of Exact Matrix Completion </span>
+<span class="sd">                            via Convex Optimization by Emmanuel Candes and Benjamin </span>
+<span class="sd">                            Recht using cvxpy. Too slow for large matrices.</span>
+
+<span class="sd">    BiScaler: Iterative estimation of row/column means and standard deviations </span>
+<span class="sd">                to get doubly normalized matrix. Not guaranteed to converge but </span>
+<span class="sd">                works well in practice. Taken from Matrix Completion and </span>
+<span class="sd">                Low-Rank SVD via Fast Alternating Least Squares.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_fancyimpute_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="s1">&#39;BiScaler&#39;</span><span class="p">,</span> <span class="s1">&#39;NuclearNormMinimization&#39;</span><span class="p">,</span> <span class="s1">&#39;SoftImpute&#39;</span><span class="p">,</span> <span class="s1">&#39;IterativeSVD&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_fancyimpute</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="n">_fancyimpute_options</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;You must install `fancyimpute` (pip install fancyimpute) to use this method&#39;</span><span class="p">)</span>
+
+    <span class="n">_base_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_base_options</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_fancyimpute_options</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">))):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;method not understood.. Use `mean`, `median`, a scalar, or an option from `fancyimpute`&#39;</span><span class="p">)</span>
+
+    <span class="n">X_incomplete</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;KNN&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">KNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;BiScaler&#39;</span><span class="p">:</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">BiScaler</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;NuclearNormMinimization&#39;</span><span class="p">:</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">NuclearNormMinimization</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;SoftImpute&#39;</span><span class="p">:</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">SoftImpute</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;IterativeSVD&#39;</span><span class="p">:</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">IterativeSVD</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
+        <span class="n">col_means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_incomplete</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">X_incomplete</span><span class="p">[:,</span><span class="n">i</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">[:,</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">col_means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">X_incomplete</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
+        <span class="n">col_means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_incomplete</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">X_incomplete</span><span class="p">[:,</span><span class="n">i</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">[:,</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">col_means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">X_incomplete</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Must give `value` argument if method == constant&#39;</span><span class="p">)</span>
+        <span class="n">X_incomplete</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">X_incomplete</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">X_filled</span> <span class="o">=</span> <span class="n">X_incomplete</span>
+
+    <span class="k">return</span> <span class="n">X_filled</span></div>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, ANTs Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'master',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
