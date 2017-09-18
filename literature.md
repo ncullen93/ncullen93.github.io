@@ -5,7 +5,7 @@ permalink: /literature/
 layout: research
 ---
 
-# Scientific literature behind the ANTsX ecosystem
+# ANTs-based tools in the scientific literature
 
 ANTs-based tools have been both described and applied in many peer-reviewed 
 scientific papers. We hope this section can be a starting point for researchers 
