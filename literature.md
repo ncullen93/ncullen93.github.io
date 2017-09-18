@@ -17,6 +17,7 @@ of imaging tasks, brain and mood disorders, and other scientific communities.
 ----------------------------------------------------------------
 ## Theory & Applications
 <br/>
+This section presents a broad overview of the theory and applications of the ANTsX ecosystem.
 The peer-reviewed papers in this section describe and validate specific tools in 
 the ANTsX ecosystem (theory), or have applied ANTs-based tools for processing or analyzing 
 medical images as part of a scientific study (applications).
