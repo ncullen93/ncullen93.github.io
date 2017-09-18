@@ -6,7 +6,10 @@ layout: about
 ---
 # About ANTsX
 
-The ANTsX ecosystem is comprised of the following stand-alone software packages:
+ANTsX is an ecosystem of stand-alone yet related software tools. It is built on top
+of the <i>Insight Software Toolkit</i> (ITK).
+
+The ecosystem is comprised of the following tools:
 
 - ANTs: the core, command-line based tools
 - ANTsR: an interface for ANTs and other statistical methods in the R programming language

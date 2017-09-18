@@ -22,16 +22,15 @@ The peer-reviewed papers in this section describe and validate specific tools in
 the ANTsX ecosystem (theory), or have applied ANTs-based tools for processing or analyzing 
 medical images as part of a scientific study (applications).
 
-- <a href="/literature-theory/" style="font-size:26px">Theory</a>
-- <a href="/literature-applications/" style="font-size:26px">Applications</a>
+- <a href="/literature-theory/" style="font-size:26px">Theory Overview</a>
+- <a href="/literature-applications/" style="font-size:26px">Applications Overview</a>
 
 ----------------------------------------------------------------
 
 ## ANTs & Medical Imaging
 <br/>
-The peer-reviewed papers and ideas presented in this section place ANTs-based tools in 
-the context of the broader medical imaging literature and thus do not necessarily describe or even
-use ANTs-based tools specifically.
+The peer-reviewed papers and ideas presented in this section place the theory behind
+various ANTs-based tools in the context of the broader medical imaging literature.
 
 - <a href="/literature-registration/" style="font-size:26px">Registration</a>
 - <a href="/literature-segmentation/" style="font-size:26px">Segmentation</a>
@@ -48,7 +47,7 @@ to investigate scientific hypothesis related to specific disorders.
 - <a href="/literature-dementia/" style="font-size:26px">Dementia</a>
 - <a href="/literature-depression/" style="font-size:26px">Depression & Anxiety</a>
 - <a href="/literature-tbi/" style="font-size:26px">Traumatic Brain Injury</a>
-
+- <a href="/literature-tumor/" style="font-size:26px">Tumor Segmentation</a>
 ----------------------------------------------------------------
 
 ## ANTs & Other Communities

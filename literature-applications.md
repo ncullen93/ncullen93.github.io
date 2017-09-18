@@ -6,9 +6,13 @@ layout: research
 ---
 < <a href="/literature/">Back to Literature</a>
 
-# ANTs applications in the scientific literature
+# Applications of ANTs tools
 
-This section discusses applications and uses of ANTs-based tools in the scientific 
-literature. If you are looking to see all the interesting things ANTs can do, or want 
-to learn how other researchers use ANTs in their processing or analysis pipelines, then
-this section is for you.
+This section presents a broad overview of the various applications of ANTs-based
+tools in the greater medical imaging community. The ANTsX ecosystem has been used
+to investigate scientific hypotheses across a wide range of domains, and has helped
+understand fundamental questions related to medical image processing in general.
+
+
+
+

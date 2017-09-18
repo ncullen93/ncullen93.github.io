@@ -6,7 +6,7 @@ layout: research
 ---
 < <a href="/literature/">Back to Literature</a>
 
-# ANTs methodology in the scientific literature
+# ANTs theory
 
 The theory and methodology behind ANTs-based tools have been described in numerous papers. 
 In this section, we discuss various papers that go in-depth about the theory 
@@ -30,6 +30,13 @@ target brain is large.
 - Avants BB, Epstein CL, Grossman M, Gee JC. "Symmetric Diffeomorphic Image Registration with 
 Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerative Brain." Medical image analysis. 2008;12(1):26-41. 
 doi:10.1016/j.media.2007.06.004. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/17659998))
+
+The general ITK image registration framework is described here:
+
+- Avants BB, Tustison NJ, Stauffer M, Song G, Wu B, Gee JC. 
+The Insight ToolKit image registration framework. Frontiers 
+in Neuroinformatics. 2014;8:44. doi:10.3389/fninf.2014.00044.
+([link to paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4009425/))
 
 ### <i>Independent Evaluation of ANTs Registration</i>
 
@@ -62,6 +69,13 @@ ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2004.07.010. ([link to pape
 - Avants BB, Yushkevich P, Pluta J, et al. The Optimal Template Effect in Hippocampus Studies of 
 Diseased Populations. NeuroImage. 2010;49(3):2457. doi:10.1016/j.neuroimage.2009.09.062. 
 ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/19818860))
+
+Additionally, a set of brain templates commonly used in ANTs-based processing tasks
+can be found [at this link](https://figshare.com/articles/ANTs_ANTsR_Brain_Templates/915436).
+This link provides templates for 4 public neuroimaging datasets: IXI, Oasis, NKI-1
+and Kirby/MMRR. Each template contains an average T1 neuroimage of the 
+head and tissue priors for cortex, white matter, cerebrospinal fluid, 
+deep gray matter, brainstem and the cerebellum.
 
 ----------------------------------------------------------------
 ## <b>Image Segmentation</b>
