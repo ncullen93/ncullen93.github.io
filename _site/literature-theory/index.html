@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ANTs | Literature Theory</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600,700">
+    <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body id="literature-theory">
+
+    <header>
+
+    
+    <div class="container">
+    
+
+    <div class="logo"><a href="/"></a></div>
+
+
+    <a class="btn" href="/docs/">ANTsPy Docs</a>
+    <a class="btn" href="https://www.rdocumentation.org/packages/ANTsR/versions/1.0">ANTsR Docs</a>
+    <a class="btn" href="http://stnava.github.io/ANTs/">ANTs Docs</a>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <ul class="primary-nav"">
+    
+    <li><a  href="/">Get Started</a></li>
+    <li><a  href="/about/">About</a></li>
+
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Research<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="/literature/">Literature</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Tutorials</a></li>
+      </ul>
+    </li>
+
+    <li><a  href="https://discuss.pytorch.org">Discuss</a></li>
+</ul>
+
+
+    
+    </div>
+    
+
+</header>
+    
+    <section class="content wrap">
+        <div class="container">
+            <h1 id="ants-methodology-in-the-scientific-literature">ANTs methodology in the scientific literature</h1>
+
+<p>The theory and methodology behind ANTs-based tools have been described in numerous papers. 
+In this section, we discuss various papers that go in-depth about the theory 
+and methodology behind ANTs. If you want to read literature about ANTs or are 
+looking for papers to cite after using ANTs-based tools, then this the section is for you.</p>
+
+<hr />
+<h2 id="image-registration">Image Registration</h2>
+<p><br />
+Image registration refers to the alignment of two or more images into a common space. This is
+the bread-and-butter of ANTs.</p>
+
+<h3 id="diffeomorphic-registration">Diffeomorphic Registration</h3>
+
+<p>Diffeomorphic registration is a type of registration which produces invertible maps describing
+a local deformation field at each voxel. This method is validated against gold standard data,
+and is known to perform particularly well when the distance between the template brain and the
+target brain is large.</p>
+
+<ul>
+  <li>Avants BB, Epstein CL, Grossman M, Gee JC. “Symmetric Diffeomorphic Image Registration with 
+Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerative Brain.” Medical image analysis. 2008;12(1):26-41. 
+doi:10.1016/j.media.2007.06.004. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/17659998">link to paper</a>)</li>
+</ul>
+
+<h3 id="independent-evaluation-of-ants-registration">Independent Evaluation of ANTs Registration</h3>
+
+<p>How can we be sure that ANTs registration tools are effective? And how do they compare against 
+other commonly used registration tools? This is where independent evaluations come into play. The 
+ANTs core team has published numerous studies evaluating our methods on gold standard data.</p>
+
+<ul>
+  <li>
+    <p>Klein A, Andersson J, Ardekani BA, et al. Evaluation of 14 nonlinear deformation algorithms 
+applied to human brain MRI registration. NeuroImage. 2009;46(3):786-802. 
+doi:10.1016/j.neuroimage.2008.12.037. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/19195496">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>K. Murphy, B. van Ginneken, …, “Evaluation of registration
+methods on thoracic CT: The empire10 challenge,” IEEE Trans. Med. 
+Imag., vol. 30, no. 11, pp. 1901–1920, Nov. 2011. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21632295">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, Gee JC. A Reproducible Evaluation of 
+ANTs Similarity Metric Performance in Brain Image Registration. NeuroImage.
+2011;54(3):2033-2044. doi:10.1016/j.neuroimage.2010.09.025. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/20851191">link to paper</a>)</p>
+  </li>
+</ul>
+
+<h3 id="template-construction">Template Construction</h3>
+
+<p>Constructing templates is central to the normalization process. Templates allow you to 
+encode population-level prior information and provide a common space for normalizing images.</p>
+
+<ul>
+  <li>
+    <p>Brian Avants, James C. Gee, Geodesic estimation for large deformation anatomical shape averaging and 
+interpolation, In NeuroImage, Volume 23, Supplement 1, 2004, Pages S139-S150, 
+ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2004.07.010. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/15501083">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>Avants BB, Yushkevich P, Pluta J, et al. The Optimal Template Effect in Hippocampus Studies of 
+Diseased Populations. NeuroImage. 2010;49(3):2457. doi:10.1016/j.neuroimage.2009.09.062. 
+(<a href="http://www.ncbi.nlm.nih.gov/pubmed/19818860">link to paper</a>)</p>
+  </li>
+</ul>
+
+<hr />
+<h2 id="image-segmentation">Image Segmentation</h2>
+<p><br />
+Image segmentation refers to the problem of assigning one of multiple discrete classes to every location 
+in an image. Typical segmentation tasks include skull stripping, segmenting the brain into gray matter and
+white matter, or atlas-based methods to achieve entire parcellations. ANTs-based tools achieve strong results 
+on all of the major segmentation tasks, and continues to push the state-of-the-art.</p>
+
+<h3 id="tissue-segmentation">Tissue segmentation</h3>
+
+<p>Our <i>Atropos</i> algorithm is a go-to method for n-class tissue segmentation. This algorithm uses 
+multivariate expectation maximization of Markov random fields to incorporate prior knowledge
+that achieves strong results even with non-standard images.</p>
+
+<ul>
+  <li>Avants BB, Tustison NJ, Wu J, Cook PA, Gee JC. An Open Source Multivariate Framework 
+for n-Tissue Segmentation with Evaluation on Public Data. Neuroinformatics. 
+2011;9(4):381-400. doi:10.1007/s12021-011-9109-y. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21373993">link to paper</a>)</li>
+</ul>
+
+<h3 id="multi-atlas-segmentation">Multi-atlas segmentation</h3>
+
+<p>Our multi-atlas segmentation method is a meta-algorithm which greatly improves performane, albeit
+with increased computation time. This method performs particularly well in typically difficult 
+tasks such as hippocampus segmentation.</p>
+
+<ul>
+  <li>Wang H, Das SR, Suh JW, et al. A Learning-Based Wrapper Method to Correct 
+Systematic Errors in Automatic Image Segmentation: Consistently Improved 
+Performance in Hippocampus, Cortex and Brain Segmentation. NeuroImage. 
+2011;55(3):968-985. doi:10.1016/j.neuroimage.2011.01.006. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21237273">link to paper</a>)</li>
+</ul>
+
+<h3 id="direct-cortical-thickness-estimation">DiReCT cortical thickness estimation</h3>
+
+<p>The DiReCT algorithm is a registration-based method for estimating cortical thickness in the 
+brain. The greater ANTs cortical thickness pipeline is a well-validated method commonly used
+in the literature for investigating imaging biomarkers.</p>
+
+<ul>
+  <li>Das SR, Avants BB, Grossman M, Gee JC. Registration Based Cortical Thickness 
+Measurement. NeuroImage. 2009;45(3):867-879. doi:10.1016/j.neuroimage.2008.12.016.
+(<a href="http://www.ncbi.nlm.nih.gov/pubmed/19150502">link to paper</a>)</li>
+</ul>
+
+<p>The DiReCT method has also been validated in chimpanzees:</p>
+
+<ul>
+  <li>Hopkins WD, Avants BB. Regional and Hemispheric Variation in Cortical Thickness 
+in Chimpanzees (Pan troglodytes). The Journal of neuroscience : 
+the official journal of the Society for Neuroscience. 2013;33(12):5241-5248. 
+doi:10.1523/JNEUROSCI.2996-12.2013. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/23516289">link to paper</a>)</li>
+</ul>
+
+<hr />
+<h2 id="multivariate-statistical-analysis">Multivariate Statistical Analysis</h2>
+<p><br />
+ANTs is also a useful tool to carry out multivariate statistical analysis on imaging and behavioral 
+features. Using ANTs as an end-to-end processing and analysis reduces systematic error and improves
+generalizability of results. The analysis capabilities of the ANTsX ecosystem are broad and 
+well-validated in the literature.</p>
+
+<p>Particularly, our <i>Eigenanatomy</i> tools provide a suite of analysis methods capable of 
+investigating sparse, multi-modal relationships between imaging and behavioral data.</p>
+
+<ul>
+  <li>Avants B, Dhillon P, Kandel BM, et al. Eigenanatomy improves detection power 
+for longitudinal cortical change. Medical image computing and 
+computer-assisted intervention : MICCAI . International Conference 
+on Medical Image Computing and Computer-Assisted Intervention. 
+2012;15(0 3):206-213. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/23286132">link to paper</a>)</li>
+</ul>
+
+<p>Additionally, we have implementations of <i>Sparse CCA</i> and <i>Sparse Regression</i> 
+which provide biologically-plausible results and high performance in the context of brain images.</p>
+
+<ul>
+  <li>
+    <p>Avants BB, Cook PA, Ungar L, Gee JC, Grossman M. Dementia Induces Correlated 
+Reductions in White Matter Integrity and Cortical Thickness: A Multivariate 
+Neuroimaging Study with Sparse Canonical Correlation Analysis. NeuroImage. 
+2010;50(3):1004-1016. doi:10.1016/j.neuroimage.2010.01.041. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/20083207">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>Avants B, Cook PA, McMillan C, et al. Sparse Unbiased Analysis of Anatomical Variance 
+in Longitudinal Imaging. Medical image computing and computer-assisted intervention : 
+MICCAI . International Conference on Medical Image Computing and Computer-Assisted 
+Intervention. 2010;13(0 1):324-331. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/20879247">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>Kandel, Benjamin M. and Wolk, David A. and Gee, James C. and Avants, Brian. 
+Predicting Cognitive Data from Medical Images Using Sparse Linear Regression. 
+Springer Berlin Heidelberg, 2013 (<a href="http://link.springer.com/chapter/10.1007%2F978-3-642-38868-2_8">link to paper</a>)</p>
+  </li>
+</ul>
+
+<p>Also, multivariate analysis of registration results can be useful:</p>
+
+<ul>
+  <li>Brian Avants, Jeffrey T. Duda, Junghoon Kim, Hui Zhang, John Pluta, James C. Gee, 
+John Whyte, Multivariate Analysis of Structural and Diffusion Imaging in 
+Traumatic Brain Injury, In Academic Radiology, Volume 15, Issue 11, 2008, 
+Pages 1360-1375, ISSN 1076-6332, https://doi.org/10.1016/j.acra.2008.07.007.
+(<a href="http://www.ncbi.nlm.nih.gov/pubmed/18995188">link to paper</a>)</li>
+</ul>
+
+<h3 id="other">Other</h3>
+
+<p>N4 Bias Correction:</p>
+
+<ul>
+  <li>Tustison NJ, Avants BB, Cook PA, et al. N4ITK: Improved N3 Bias 
+Correction. IEEE transactions on medical imaging. 2010;29(6):1310-1320. 
+doi:10.1109/TMI.2010.2046908. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/20378467">link to paper</a>)</li>
+</ul>
+
+<p>Statistical bias:</p>
+
+<ul>
+  <li>Tustison, N. J., Avants, B. B., Cook, P. A., Kim, J., Whyte, J., 
+Gee, J. C. and Stone, J. R. (2014), Logical circularity in voxel-based 
+analysis: Normalization strategy may induce statistical bias. Hum.
+ Brain Mapp, 35: 745–759. doi:10.1002/hbm.22211 (<a href="http://www.ncbi.nlm.nih.gov/pubmed/23151955">link to paper</a>)</li>
+</ul>
+
+
+        </div>
+    </section>
+
+    <footer>
+
+    
+    <div class="container">
+    
+
+    <div class="left">
+        <div style="height: 30px" class="logo"><a  href="/"></a></div>
+        <p>
+            Maintained by the ANTs consortium. <br>
+            &copy;2017 ANTs
+        </p>
+    </div>
+    
+    <ul class="primary-nav"">
+    
+    <li><a  href="/">Get Started</a></li>
+    <li><a  href="/about/">About</a></li>
+
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Research<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="/literature/">Literature</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Tutorials</a></li>
+      </ul>
+    </li>
+
+    <li><a  href="https://discuss.pytorch.org">Discuss</a></li>
+</ul>
+
+
+    
+    </div>
+    
+
+</footer>
+
+
+</body>
+</html>
