@@ -4,107 +4,87 @@ id: about
 permalink: /about/
 layout: about
 ---
+# About ANTsX
 
-PyTorch is a python package that provides two high-level features:
+The ANTsX ecosystem is comprised of the following stand-alone software packages:
 
-- Tensor computation (like numpy) with strong GPU acceleration
-- Deep Neural Networks built on a tape-based autograd system
+- ANTs: the core, command-line based tools
+- ANTsR: an interface for ANTs and other statistical methods in the R programming language
+- ANTsPy: an interface for ANTsPy and other statistical methods in the Python programming langauge
 
-You can reuse your favorite python packages such as numpy, scipy and Cython to extend PyTorch when needed.
+Each of these three tools have similar functionality, so switching and collaborating
+between them is easy. They are all well-validated and well-tested -- both in terms of software and
+through peer-reviewed studies.
 
-At a granular level, PyTorch is a library that consists of the following components:
+At a modular level, ANTsX contains the following functionality:
 
-| Package                  | Description |
-| ------------------------ | --- |
-| torch                    | a Tensor library like NumPy, with strong GPU support |
-| torch.autograd           | a tape based automatic differentiation library that supports all differentiable Tensor operations in torch |
-| torch.nn                 | a neural networks library deeply integrated with autograd designed for maximum flexibility |
-| torch.optim              | an optimization package to be used with torch.nn with standard optimization methods such as SGD, RMSProp, LBFGS, Adam etc. |
-| torch.multiprocessing    | python multiprocessing, but with magical memory sharing of torch Tensors across processes. Useful for data loading and hogwild training. |
-| torch.utils              | DataLoader, Trainer and other utility functions for convenience |
-| torch.legacy(.nn/.optim) | legacy code that has been ported over from torch for backward compatibility reasons |
+| Module    | Description |
+| ------------  | --- |
+| Registration  | Perform rigid, affine, diffeomorphic registration |
+| Segmentation  | Tissue/multi-atlas segmentation & cortical thickness measures |
+| Utilities     | Intensity normalization, bias correction, resampling, etc |
+| IO            | Efficient reading and writing of medical images |
+| Visualization | Visualize volume, surface, and slices of medical images |
+| Analysis      | Multivariate statistical analysis methods |
 
-Usually one uses PyTorch either as:
 
-- A replacement for numpy to use the power of GPUs.
-- a deep learning research platform that provides maximum flexibility and speed
+The major uses of the ANTsX ecosystem are for the following:
 
-Elaborating further:
+- As a pre-processing tool for structural or functional brain images
+- To carry out multivariate statistical analysis of imaging and behavioral data
+- For fast and efficient reading, writing, and visualization of medical images
 
-### A GPU-ready Tensor library
+----------------------------------------------------------------
 
-If you use numpy, then you have used Tensors (a.k.a ndarray).
+# ANTsX in the Scientific Community
 
-![tensor_illustration](/static/img/tensor_illustration.png)
+The usage of ANTs-based tools is prevelant in the brain imaging literature, owing
+to its open-source nature, ease-of-use, and large number of tutorials and case studies
+created by the ANTs community. In this section, we briefly discuss the state of
+the ANTsX ecosystem in the scientific community.
 
-PyTorch provides Tensors that can live either on the CPU or the GPU, and accelerate
-compute by a huge amount.
+## Literature
+<br />
+ANTs-based tools are described in numerous peer-reviewed papers. For an extensive
+list of literature describing and applying these tools, please visit the specific page dedicated to 
+<a href="/literature/">ANTs-based tools in the scientific literature</a>
 
-We provide a wide variety of tensor routines to accelerate and fit your scientific computation needs
-such as slicing, indexing, math operations, linear algebra, reductions.
-And they are fast!
 
-### Dynamic Neural Networks: Tape based Autograd
+## Tutorials
+<br />
+Numerous tutorials for learning how to use ANTs-based tools have been created by
+the core development team and the greater medical imaging community. For the most
+comprehensive list of the various tutorials available, please visit the specific 
+page dedicated to <a href="/tutorials/">tutorials for the ANTsX ecosystem</a>
 
-PyTorch has a unique way of building neural networks: using and replaying a tape recorder.
+## Case Studies
+<br />
+To go through actual case studies or to find complete source code and pipelines
+applicable for real scientific studies, please visit the specific page dedicated
+to <a href="/case-studies/">case studies for the ANTsX ecosystem</a>
 
-Most frameworks such as `TensorFlow`, `Theano`, `Caffe` and `CNTK` have a static view of the world.
-One has to build a neural network, and reuse the same structure again and again.
-Changing the way the network behaves means that one has to start from scratch.
+----------------------------------------------------------------
 
-With PyTorch, we use a technique called Reverse-mode auto-differentiation, which allows you to
-change the way your network behaves arbitrarily with zero lag or overhead. Our inspiration comes
-from several research papers on this topic, as well as current and past work such as
-[autograd](https://github.com/twitter/torch-autograd),
-[autograd](https://github.com/HIPS/autograd),
-[Chainer](http://chainer.org), etc.
+# Core Development Team
 
-While this technique is not unique to PyTorch, it's one of the fastest implementations of it to date.
-You get the best of speed and flexibility for your crazy research.
+The core development team is composed of the following people:
 
-![dynamic_graph](/static/img/dynamic_graph.gif)
+### Brian B. Avants - UPenn
+Role: Creator, Algorithm Design, Implementation
 
-### Python first
+### Nicholas J. Tustison - UVA
+Role: Compeller, Algorithm Design, Implementation Guru
 
-PyTorch is not a Python binding into a monolothic C++ framework.
-It is built to be deeply integrated into Python.
-You can use it naturally like you would use numpy / scipy / scikit-learn etc.
-You can write your new neural network layers in Python itself, using your favorite libraries
-and use packages such as Cython and Numba.
-Our goal is to not reinvent the wheel where appropriate.
+### Hans J. Johnson - UIowa
+Role: Large-Scale Application, Testing, Software design
 
-### Imperative experiences
+### Team Members
+Core: Gang Song (Originator), Philip A. Cook, Jeffrey T. Duda (DTI), 
+Ben M. Kandel (Perfusion, multivariate analysis), Nicholas C. Cullen (Python)
 
-PyTorch is designed to be intuitive, linear in thought and easy to use.
-When you execute a line of code, it gets executed. There isn't an asynchronous view of the world.
-When you drop into a debugger, or receive error messages and stack traces, understanding them is straight-forward.
-The stack-trace points to exactly where your code was defined.
-We hope you never spend hours debugging your code because of bad stack traces or asynchronous and opaque execution engines.
 
-### Fast and Lean
 
-PyTorch has minimal framework overhead. We integrate acceleration libraries 
-such as Intel MKL and NVIDIA (CuDNN, NCCL) to maximize speed. 
-At the core, it's CPU and GPU Tensor and Neural Network backends 
-(TH, THC, THNN, THCUNN) are written as independent libraries with a C99 API.  
-They are mature and have been tested for years.
 
-Hence, PyTorch is quite fast -- whether you run small or large neural networks.
 
-The memory usage in PyTorch is extremely efficient compared to Torch or some of the alternatives.
-We've written custom memory allocators for the GPU to make sure that
-your deep learning models are maximally memory efficient.
-This enables you to train bigger deep learning models than before.
 
-### Extensions without pain
-
-Writing new neural network modules, or interfacing with PyTorch's Tensor API was designed to be straight-forward
-and with minimal abstractions.
-
-You can write new neural network layers in Python using the torch API
-[or your favorite numpy based libraries such as SciPy](http://pytorch.org/tutorials/advanced/numpy_extensions_tutorial.html)
-
-If you want to write your layers in C/C++, we provide an extension API based on
-[cffi](http://cffi.readthedocs.io/en/latest/) that is efficient and with minimal boilerplate.  
-There is no wrapper code that needs to be written. [You can see an example here](https://github.com/pytorch/extension-ffi).
 
