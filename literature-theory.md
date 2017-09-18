@@ -4,6 +4,7 @@ id: literature-theory
 permalink: /literature-theory/
 layout: research
 ---
+< <a href="/literature/">Back to Literature</a>
 
 # ANTs methodology in the scientific literature
 
@@ -13,12 +14,13 @@ and methodology behind ANTs. If you want to read literature about ANTs or are
 looking for papers to cite after using ANTs-based tools, then this the section is for you.
 
 ----------------------------------------------------------------
-## Image Registration
+
+## <b>Image Registration</b>
 <br />
 Image registration refers to the alignment of two or more images into a common space. This is
 the bread-and-butter of ANTs.
 
-### Diffeomorphic Registration
+### <i>Diffeomorphic Registration</i>
 
 Diffeomorphic registration is a type of registration which produces invertible maps describing
 a local deformation field at each voxel. This method is validated against gold standard data,
@@ -29,7 +31,7 @@ target brain is large.
 Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerative Brain." Medical image analysis. 2008;12(1):26-41. 
 doi:10.1016/j.media.2007.06.004. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/17659998))
 
-### Independent Evaluation of ANTs Registration
+### <i>Independent Evaluation of ANTs Registration</i>
 
 How can we be sure that ANTs registration tools are effective? And how do they compare against 
 other commonly used registration tools? This is where independent evaluations come into play. The 
@@ -48,7 +50,7 @@ ANTs Similarity Metric Performance in Brain Image Registration. NeuroImage.
 2011;54(3):2033-2044. doi:10.1016/j.neuroimage.2010.09.025. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/20851191))
 
 
-### Template Construction
+### <i>Template Construction</i>
 
 Constructing templates is central to the normalization process. Templates allow you to 
 encode population-level prior information and provide a common space for normalizing images.
@@ -62,14 +64,15 @@ Diseased Populations. NeuroImage. 2010;49(3):2457. doi:10.1016/j.neuroimage.2009
 ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/19818860))
 
 ----------------------------------------------------------------
-## Image Segmentation
+## <b>Image Segmentation</b>
 <br />
 Image segmentation refers to the problem of assigning one of multiple discrete classes to every location 
 in an image. Typical segmentation tasks include skull stripping, segmenting the brain into gray matter and
 white matter, or atlas-based methods to achieve entire parcellations. ANTs-based tools achieve strong results 
 on all of the major segmentation tasks, and continues to push the state-of-the-art.
 
-### Tissue segmentation
+### <i>Tissue segmentation</i>
+
 
 Our <i>Atropos</i> algorithm is a go-to method for n-class tissue segmentation. This algorithm uses 
 multivariate expectation maximization of Markov random fields to incorporate prior knowledge
@@ -79,8 +82,10 @@ that achieves strong results even with non-standard images.
 for n-Tissue Segmentation with Evaluation on Public Data. Neuroinformatics. 
 2011;9(4):381-400. doi:10.1007/s12021-011-9109-y. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/21373993))
 
+<img style="height:500px;" src="/static/img/ants-figures/atropos-figure.png">
 
-### Multi-atlas segmentation
+
+### <i>Multi-atlas segmentation</i>
 
 Our multi-atlas segmentation method is a meta-algorithm which greatly improves performane, albeit
 with increased computation time. This method performs particularly well in typically difficult 
@@ -92,7 +97,7 @@ Performance in Hippocampus, Cortex and Brain Segmentation. NeuroImage.
 2011;55(3):968-985. doi:10.1016/j.neuroimage.2011.01.006. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/21237273))
 
 
-### DiReCT cortical thickness estimation
+### <i>DiReCT cortical thickness estimation</i>
 
 The DiReCT algorithm is a registration-based method for estimating cortical thickness in the 
 brain. The greater ANTs cortical thickness pipeline is a well-validated method commonly used
@@ -102,6 +107,13 @@ in the literature for investigating imaging biomarkers.
 Measurement. NeuroImage. 2009;45(3):867-879. doi:10.1016/j.neuroimage.2008.12.016.
 ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/19150502))
 
+- Nicholas J. Tustison, Philip A. Cook, Arno Klein, Gang Song, Sandhitsu R. Das, 
+Jeffrey T. Duda, Benjamin M. Kandel, Niels van Strien, James R. Stone,
+James C. Gee, Brian B. Avants, Large-scale evaluation of ANTs and 
+FreeSurfer cortical thickness measurements, In NeuroImage, Volume 99, 2014, 
+Pages 166-179, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2014.05.044.
+([link to paper](https://www.ncbi.nlm.nih.gov/pubmed/24879923))
+
 The DiReCT method has also been validated in chimpanzees:
 
 - Hopkins WD, Avants BB. Regional and Hemispheric Variation in Cortical Thickness 
@@ -110,13 +122,14 @@ the official journal of the Society for Neuroscience. 2013;33(12):5241-5248.
 doi:10.1523/JNEUROSCI.2996-12.2013. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/23516289))
 
 ----------------------------------------------------------------
-## Multivariate Statistical Analysis 
+## <b>Multivariate Statistical Analysis</b>
 <br />
 ANTs is also a useful tool to carry out multivariate statistical analysis on imaging and behavioral 
 features. Using ANTs as an end-to-end processing and analysis reduces systematic error and improves
 generalizability of results. The analysis capabilities of the ANTsX ecosystem are broad and 
 well-validated in the literature.
 
+### <i>Eigenanatomy</i>
 Particularly, our <i>Eigenanatomy</i> tools provide a suite of analysis methods capable of 
 investigating sparse, multi-modal relationships between imaging and behavioral data.
 

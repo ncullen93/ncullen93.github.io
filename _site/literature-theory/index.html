@@ -40,8 +40,8 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Research<span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="/literature/">Literature</a></li>
-        <li><a href="#">Case Studies</a></li>
-        <li><a href="#">Tutorials</a></li>
+        <li><a href="/case-studies/">Case Studies</a></li>
+        <li><a href="/tutorials/">Tutorials</a></li>
       </ul>
     </li>
 
@@ -57,7 +57,9 @@
     
     <section class="content wrap">
         <div class="container">
-            <h1 id="ants-methodology-in-the-scientific-literature">ANTs methodology in the scientific literature</h1>
+            <p>&lt; <a href="/literature/">Back to Literature</a></p>
+
+<h1 id="ants-methodology-in-the-scientific-literature">ANTs methodology in the scientific literature</h1>
 
 <p>The theory and methodology behind ANTs-based tools have been described in numerous papers. 
 In this section, we discuss various papers that go in-depth about the theory 
@@ -65,12 +67,13 @@ and methodology behind ANTs. If you want to read literature about ANTs or are
 looking for papers to cite after using ANTs-based tools, then this the section is for you.</p>
 
 <hr />
-<h2 id="image-registration">Image Registration</h2>
+
+<h2 id="image-registration"><b>Image Registration</b></h2>
 <p><br />
 Image registration refers to the alignment of two or more images into a common space. This is
 the bread-and-butter of ANTs.</p>
 
-<h3 id="diffeomorphic-registration">Diffeomorphic Registration</h3>
+<h3 id="diffeomorphic-registration"><i>Diffeomorphic Registration</i></h3>
 
 <p>Diffeomorphic registration is a type of registration which produces invertible maps describing
 a local deformation field at each voxel. This method is validated against gold standard data,
@@ -83,7 +86,7 @@ Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerativ
 doi:10.1016/j.media.2007.06.004. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/17659998">link to paper</a>)</li>
 </ul>
 
-<h3 id="independent-evaluation-of-ants-registration">Independent Evaluation of ANTs Registration</h3>
+<h3 id="independent-evaluation-of-ants-registration"><i>Independent Evaluation of ANTs Registration</i></h3>
 
 <p>How can we be sure that ANTs registration tools are effective? And how do they compare against 
 other commonly used registration tools? This is where independent evaluations come into play. The 
@@ -107,7 +110,7 @@ ANTs Similarity Metric Performance in Brain Image Registration. NeuroImage.
   </li>
 </ul>
 
-<h3 id="template-construction">Template Construction</h3>
+<h3 id="template-construction"><i>Template Construction</i></h3>
 
 <p>Constructing templates is central to the normalization process. Templates allow you to 
 encode population-level prior information and provide a common space for normalizing images.</p>
@@ -126,14 +129,14 @@ Diseased Populations. NeuroImage. 2010;49(3):2457. doi:10.1016/j.neuroimage.2009
 </ul>
 
 <hr />
-<h2 id="image-segmentation">Image Segmentation</h2>
+<h2 id="image-segmentation"><b>Image Segmentation</b></h2>
 <p><br />
 Image segmentation refers to the problem of assigning one of multiple discrete classes to every location 
 in an image. Typical segmentation tasks include skull stripping, segmenting the brain into gray matter and
 white matter, or atlas-based methods to achieve entire parcellations. ANTs-based tools achieve strong results 
 on all of the major segmentation tasks, and continues to push the state-of-the-art.</p>
 
-<h3 id="tissue-segmentation">Tissue segmentation</h3>
+<h3 id="tissue-segmentation"><i>Tissue segmentation</i></h3>
 
 <p>Our <i>Atropos</i> algorithm is a go-to method for n-class tissue segmentation. This algorithm uses 
 multivariate expectation maximization of Markov random fields to incorporate prior knowledge
@@ -145,7 +148,9 @@ for n-Tissue Segmentation with Evaluation on Public Data. Neuroinformatics.
 2011;9(4):381-400. doi:10.1007/s12021-011-9109-y. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21373993">link to paper</a>)</li>
 </ul>
 
-<h3 id="multi-atlas-segmentation">Multi-atlas segmentation</h3>
+<p><img style="height:500px;" src="/static/img/ants-figures/atropos-figure.png" /></p>
+
+<h3 id="multi-atlas-segmentation"><i>Multi-atlas segmentation</i></h3>
 
 <p>Our multi-atlas segmentation method is a meta-algorithm which greatly improves performane, albeit
 with increased computation time. This method performs particularly well in typically difficult 
@@ -158,16 +163,26 @@ Performance in Hippocampus, Cortex and Brain Segmentation. NeuroImage.
 2011;55(3):968-985. doi:10.1016/j.neuroimage.2011.01.006. (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21237273">link to paper</a>)</li>
 </ul>
 
-<h3 id="direct-cortical-thickness-estimation">DiReCT cortical thickness estimation</h3>
+<h3 id="direct-cortical-thickness-estimation"><i>DiReCT cortical thickness estimation</i></h3>
 
 <p>The DiReCT algorithm is a registration-based method for estimating cortical thickness in the 
 brain. The greater ANTs cortical thickness pipeline is a well-validated method commonly used
 in the literature for investigating imaging biomarkers.</p>
 
 <ul>
-  <li>Das SR, Avants BB, Grossman M, Gee JC. Registration Based Cortical Thickness 
+  <li>
+    <p>Das SR, Avants BB, Grossman M, Gee JC. Registration Based Cortical Thickness 
 Measurement. NeuroImage. 2009;45(3):867-879. doi:10.1016/j.neuroimage.2008.12.016.
-(<a href="http://www.ncbi.nlm.nih.gov/pubmed/19150502">link to paper</a>)</li>
+(<a href="http://www.ncbi.nlm.nih.gov/pubmed/19150502">link to paper</a>)</p>
+  </li>
+  <li>
+    <p>Nicholas J. Tustison, Philip A. Cook, Arno Klein, Gang Song, Sandhitsu R. Das, 
+Jeffrey T. Duda, Benjamin M. Kandel, Niels van Strien, James R. Stone,
+James C. Gee, Brian B. Avants, Large-scale evaluation of ANTs and 
+FreeSurfer cortical thickness measurements, In NeuroImage, Volume 99, 2014, 
+Pages 166-179, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2014.05.044.
+(<a href="https://www.ncbi.nlm.nih.gov/pubmed/24879923">link to paper</a>)</p>
+  </li>
 </ul>
 
 <p>The DiReCT method has also been validated in chimpanzees:</p>
@@ -180,13 +195,14 @@ doi:10.1523/JNEUROSCI.2996-12.2013. (<a href="http://www.ncbi.nlm.nih.gov/pubmed
 </ul>
 
 <hr />
-<h2 id="multivariate-statistical-analysis">Multivariate Statistical Analysis</h2>
+<h2 id="multivariate-statistical-analysis"><b>Multivariate Statistical Analysis</b></h2>
 <p><br />
 ANTs is also a useful tool to carry out multivariate statistical analysis on imaging and behavioral 
 features. Using ANTs as an end-to-end processing and analysis reduces systematic error and improves
 generalizability of results. The analysis capabilities of the ANTsX ecosystem are broad and 
 well-validated in the literature.</p>
 
+<h3 id="eigenanatomy"><i>Eigenanatomy</i></h3>
 <p>Particularly, our <i>Eigenanatomy</i> tools provide a suite of analysis methods capable of 
 investigating sparse, multi-modal relationships between imaging and behavioral data.</p>
 
@@ -277,8 +293,8 @@ analysis: Normalization strategy may induce statistical bias. Hum.
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Research<span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="/literature/">Literature</a></li>
-        <li><a href="#">Case Studies</a></li>
-        <li><a href="#">Tutorials</a></li>
+        <li><a href="/case-studies/">Case Studies</a></li>
+        <li><a href="/tutorials/">Tutorials</a></li>
       </ul>
     </li>
 

@@ -4,6 +4,7 @@ id: literature-applications
 permalink: /literature-applications/
 layout: research
 ---
+< <a href="/literature/">Back to Literature</a>
 
 # ANTs applications in the scientific literature
 
