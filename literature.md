@@ -8,7 +8,11 @@ layout: research
 # Scientific literature behind the ANTsX ecosystem
 
 ANTs-based tools have been both described and applied in many peer-reviewed 
-scientific papers.
+scientific papers. We hope this section can be a starting point for researchers 
+looking to understand our tools and relate them in a broader context to other 
+medical imaging analysis methods. Also, we hope this section will demonstrate 
+the effectiveness and applicability of various ANTs-based tools to a wide range 
+of imaging tasks, brain and mood disorders, and other scientific communities. 
 
 ----------------------------------------------------------------
 ## Theory & Applications
