@@ -52,6 +52,11 @@ ANTs-based tools are described in numerous peer-reviewed papers. For an extensiv
 list of literature describing and applying these tools, please visit the specific page dedicated to 
 <a href="/literature/">ANTs-based tools in the scientific literature</a>
 
+## Studies
+<br />
+To go through actual scientific studies using ANTs tools for which code is available,
+please visit the specific page dedicated to <a href="/real-studies/">studies for the ANTsX ecosystem</a>
+
 
 ## Tutorials
 <br />
@@ -60,11 +65,6 @@ the core development team and the greater medical imaging community. For the mos
 comprehensive list of the various tutorials available, please visit the specific 
 page dedicated to <a href="/tutorials/">tutorials for the ANTsX ecosystem</a>
 
-## Case Studies
-<br />
-To go through actual case studies or to find complete source code and pipelines
-applicable for real scientific studies, please visit the specific page dedicated
-to <a href="/case-studies/">case studies for the ANTsX ecosystem</a>
 
 ----------------------------------------------------------------
 
