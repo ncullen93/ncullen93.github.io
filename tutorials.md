@@ -21,6 +21,19 @@ a short overview of the methodology and software behind ANTs using real examples
 The tutorial can be downloaded here [as a pdf](https://github.com/stnava/ANTsDoc/raw/master/ants2.pdf). 
 
 ------------------------------------------------------------------------
+### Template Building
+
+This tutorial gives two examples of template building using the different template 
+building scripts available in ANTs - faces and brain slices.
+The code and data [can be found on github](https://github.com/ntustison/TemplateBuildingExample)
+
+------------------------------------------------------------------------
+### MALF Labeling
+
+This tutorial givesn an example of ANTs MALF labeling using antsJointLabelFusion.sh.
+The code and data [can be found on github](https://github.com/ntustison/MalfLabelingExample)
+
+------------------------------------------------------------------------
 ### Cooking up template priors
 
 This short tutorial gives you code and a collection of real brian images to demonstrate
@@ -40,6 +53,13 @@ data with the following goals:
 - Perform univariate and multivariate statistical tests.
 
 The complete code and data [can be found on github](https://github.com/stnava/ANTsTutorial)
+
+------------------------------------------------------------------------
+### Congressional Template Building
+
+This repository contains code and notes for building a template of all members of 
+congress using ANTs and antsMultivariateTemplateConstruction2.sh.
+The code and data [can be found on github](https://github.com/ntustison/CongressionalFaceTemplates)
 
 ------------------------------------------------------------------------
 ### Basic Brain Mapping
@@ -79,9 +99,21 @@ The code and data [can be found on github](https://github.com/ntustison/ANTsRfMR
 ### Chicken and Butterfly - Registration
 
 These are two tutorials demonstrating global registration optimization using landmark
-distances and multi-start affine initialization with ANTs.
+distances and multi-start affine initialization with ANTs on trivial examples.
 The code and data for the chicken tutorial [can be found on github](https://github.com/stnava/chicken).
 The code and data for the butterfly tutorial [can be found on github](https://github.com/stnava/butterfly).
+
+------------------------------------------------------------------------
+### ANTs Brain Registration with Mask
+
+This tutorial demonstrates ANTs registration on real brain images.
+The code and data [can be found on github](https://github.com/ntustison/antsRegistrationWithMaskExample)
+
+------------------------------------------------------------------------
+### ANTs CT Lung Registration
+
+This tutorial demonstrates CT Lung registration using ANTs.
+The code and data [can be found on github](https://github.com/ntustison/antsCtLungRegistrationExample)
 
 ------------------------------------------------------------------------
 ### Multi-modality processing
@@ -123,6 +155,82 @@ In this tutorial, you will build a template from a single image and a rotated ve
 then visually compare the template with the two images used to make the template. This
 tutorial uses ANTs (antsMultivariateTemplateConstruction).
 The code and data [can be found on github](https://github.com/ntustison/SingleSubjectTemplateExample)
+
+------------------------------------------------------------------------
+### Cortical Thickness Tutorial
+
+This is another tutorial demonstrating specifically how to use the ANTs cortical
+thickness pipeline with T1 images, T1+T2 images, and how to perform each of the 5 major
+steps in the pipeline individually.
+The code and data [can be found on github](https://github.com/ntustison/antsCorticalThicknessExample)
+
+------------------------------------------------------------------------
+### Cortical Thickness Notes and Figures
+
+This is the code and figures by Nick Tustison from the ANTs vs Freesurfer cortical
+thickness comparison paper. This will help you learn about the ANTs cortical thickness pipeline - also
+known as DiReCT or Kelly Kapowski - with some code also available.
+The code and data [can be found on github](https://github.com/ntustison/KapowskiChronicles)
+
+------------------------------------------------------------------------
+### Denoise Image Example
+
+This short example demonstrates how to use the DenoiseImage command in ANTs.
+The code and data [can be found on github](https://github.com/ntustison/DenoiseImageExample)
+
+------------------------------------------------------------------------
+### Lung Ventilation Segmentation
+
+This example shows segmentation of the lungs based on ventilation.
+The code and data [can be found on github](https://github.com/ntustison/LungVentilationSegmentationExample)
+
+------------------------------------------------------------------------
+### Atropos and N4 Example
+
+This example shows how to use the antsAtroposN4 command in ANTs.
+The code and data [can be found on github](https://github.com/ntustison/antsAtroposN4Example)
+
+------------------------------------------------------------------------
+### ANTs Visualization
+
+This tutorial shows you how to visualize volumes and surfaces, and how to create
+tiled image mosaics using ANTs.
+The code and data [can be found on github](https://github.com/ntustison/antsVisualizationExamples)
+
+------------------------------------------------------------------------
+### Brain Extraction Example
+
+This example shows how to perform brain extraction using ANTs.
+The code and data [can be found on github](https://github.com/ntustison/antsBrainExtractionExample)
+
+------------------------------------------------------------------------
+### BRATS 2013 Tumor Segmentation
+
+This repository contains notes and code in ANTs/ANTsR for the BRATS 2013 tumor
+segmentation challenge. 
+The code and data [can be found on github])https://github.com/ntustison/BRATS2013
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
