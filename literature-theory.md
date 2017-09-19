@@ -77,6 +77,8 @@ and Kirby/MMRR. Each template contains an average T1 neuroimage of the
 head and tissue priors for cortex, white matter, cerebrospinal fluid, 
 deep gray matter, brainstem and the cerebellum.
 
+<img style="height:400px;" src="/static/img/ants-figures/ants-template-1.png">
+
 ----------------------------------------------------------------
 ## <b>Image Segmentation</b>
 <br />
@@ -84,6 +86,8 @@ Image segmentation refers to the problem of assigning one of multiple discrete c
 in an image. Typical segmentation tasks include skull stripping, segmenting the brain into gray matter and
 white matter, or atlas-based methods to achieve entire parcellations. ANTs-based tools achieve strong results 
 on all of the major segmentation tasks, and continues to push the state-of-the-art.
+
+<img style="height:400px;" src="/static/img/ants-figures/ants-atropos-1.png">
 
 ### <i>Tissue segmentation</i>
 
@@ -134,6 +138,8 @@ The DiReCT method has also been validated in chimpanzees:
 in Chimpanzees (Pan troglodytes). The Journal of neuroscience : 
 the official journal of the Society for Neuroscience. 2013;33(12):5241-5248. 
 doi:10.1523/JNEUROSCI.2996-12.2013. ([link to paper](http://www.ncbi.nlm.nih.gov/pubmed/23516289))
+
+<img style="height:400px;" src="/static/img/ants-figures/ants-structural-workflow.png">
 
 ----------------------------------------------------------------
 ## <b>Multivariate Statistical Analysis</b>
