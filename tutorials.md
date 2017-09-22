@@ -13,12 +13,20 @@ specific functions at a glance, whereas other tutorials are more in-depth and co
 a broad functionality. If there's something specific you'd like to learn about, feel
 free to ask us to make a tutorial for it!
 
+
 ------------------------------------------------------------------------
 ### Comprehensive ANTs Tutorial
 
-This is the main ANTs tutorial with which everyone should start. This 41-page guide gives
+Everyone interested in ANTs should start here. This 41-page guide gives
 a short overview of the methodology and software behind ANTs using real examples. 
 The tutorial can be downloaded here [as a pdf](https://github.com/stnava/ANTsDoc/raw/master/ants2.pdf). 
+
+------------------------------------------------------------------------
+### ANTsR Cookbook
+
+Everyone interested in ANTsR should start here. On this page, you can find a 
+cookbook with a comprehensive listing of ANTsR tutorials and answers to 
+frequently asked questions. The cookbook [can be accessed here](https://rpubs.com/antsr/cookbooks)
 
 ------------------------------------------------------------------------
 ### Template Building
